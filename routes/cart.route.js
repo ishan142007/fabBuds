@@ -1,0 +1,10 @@
+import express from "express";
+import { getCart,addToCart,removeFromCart,updateCart,clearCart } from "../controllers/Cart.controller";
+import  verifyToken  from "../Middleware/verifyToken.middle";
+const router=express.Router();
+router.get("/",verifyToken,getCart);
+router.post ("/add",verifyToken,addToCart);
+router.put("/update",verifyToken,updateCart);
+router.delete("/remove/:itemId",verifyToken,removeFromCart);
+router.delete("/clear",verifyToken,clearCart);
+export default router;
