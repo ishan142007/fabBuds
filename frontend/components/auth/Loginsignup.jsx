@@ -1,102 +1,141 @@
-import React, { useState } from "react";
-import FabbudsAdminPanel from "../Admin.jsx/Admin";
+import { useState } from "react";
 
-const LoginSignup = () => {
+ function LoginSignup() {
+  const [activeTab, setActiveTab] = useState("login");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    photo: "",
+  });
 
-    const [isLogin, setIsLogin] = useState(true);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsLoggedIn(true);
+  };
 
-    return (
-        <div>
-          
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-[#0f1c3f] to-[#1e3a8a] text-white">
+      {/* Header */}
+     
 
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 to-blue-900">
+      {/* If Not Logged In → Show Login/Signup */}
+      {!isLoggedIn ? (
+        <div className="flex items-center justify-center py-16 px-4">
+          <div className="w-full max-w-md bg-[#0c1633] rounded-2xl shadow-2xl p-8">
+            <h2 className="text-3xl font-bold text-center mb-2">
+              Welcome to the <span className="text-teal-400">Future</span>
+            </h2>
 
-            <div className="bg-slate-900/60 backdrop-blur-lg p-8 rounded-2xl shadow-2xl w-[350px]">
-
-            
-                <h1 className="text-white text-3xl font-bold text-center">
-                    FABBUDS
-                </h1>
-
-                <p className="text-center text-gray-300 mt-2">
-                    Welcome to the <span className="text-cyan-400 font-semibold">Future</span>
-                </p>
-
-
-                
-                <div className="flex bg-slate-800 rounded-full mt-6 p-1">
-
-                    <button
-                        onClick={() => setIsLogin(true)}
-                        className={`flex-1 py-2 rounded-full transition ${isLogin
-                            ? "bg-gradient-to-r from-cyan-400 to-emerald-400 text-black font-semibold"
-                            : "text-white"
-
-                        }`}
-                        >
-                        Login
-                    </button>
-
-                    <button
-                        onClick={() => setIsLogin(false)}
-                        className={`flex-1 py-2 rounded-full transition ${!isLogin
-                            ? "bg-gradient-to-r from-cyan-400 to-emerald-400 text-black font-semibold"
-                            : "text-white"
-                        }`}
-                        >
-                        Sign Up
-                    </button>
-
-                </div>
-
-
-    <div>
-
-            </div>
-                <form className="mt-6 space-y-4">
-
-                    {!isLogin && (
-                        <input
-                        type="text"
-                        placeholder="Full Name"
-                        className="w-full p-3 rounded-lg bg-slate-800 text-white outline-none focus:ring-2 focus:ring-cyan-400"
-                        />
-                        )}
-
-                    <input
-                        type="email"
-                        placeholder="Email"
-                        className="w-full p-3 rounded-lg bg-slate-800 text-white outline-none focus:ring-2 focus:ring-cyan-400"
-                        />
-
-                    <input
-                        type="password"
-                        placeholder="Password"
-                        className="w-full p-3 rounded-lg bg-slate-800 text-white outline-none focus:ring-2 focus:ring-cyan-400"
-                        />
-
-                    {!isLogin && (
-                        <input
-                        type="password"
-                            placeholder="Confirm Password"
-                            className="w-full p-3 rounded-lg bg-slate-800 text-white outline-none focus:ring-2 focus:ring-cyan-400"
-                            />
-                            )}
-
-
-                    <button
-                        className="w-full py-3 rounded-lg bg-gradient-to-r from-cyan-400 to-emerald-400 text-black font-bold hover:scale-105 transition"
-                        >
-                        {isLogin ? "Sign In" : "Sign Up"}
-                    </button>
-
-                </form>
-
+            {/* Toggle */}
+            <div className="flex bg-[#1b2a52] rounded-full p-1 my-6">
+              <button
+                onClick={() => setActiveTab("login")}
+                className={`flex-1 py-2 rounded-full transition-all duration-300 ${
+                  activeTab === "login"
+                    ? "bg-gradient-to-r from-teal-400 to-green-500 text-black"
+                    : "text-gray-300"
+                }`}
+              >
+                Login
+              </button>
+              <button
+                onClick={() => setActiveTab("signup")}
+                className={`flex-1 py-2 rounded-full transition-all duration-300 ${
+                  activeTab === "signup"
+                    ? "bg-gradient-to-r from-teal-400 to-green-500 text-black"
+                    : "text-gray-300"
+                }`}
+              >
+                Sign Up
+              </button>
             </div>
 
+            {/* Form */}
+            <form onSubmit={handleSubmit} className="space-y-4">
+              {activeTab === "signup" && (
+                <input
+                  type="text"
+                  placeholder="Full Name"
+                  value={user.name}
+                  onChange={(e) =>
+                    setUser({ ...user, name: e.target.value })
+                  }
+                  className="w-full px-4 py-3 rounded-lg bg-[#1b2a52] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400"
+                  required
+                />
+              )}
+
+              <input
+                type="email"
+                placeholder="Email"
+                value={user.email}
+                onChange={(e) =>
+                  setUser({ ...user, email: e.target.value })
+                }
+                className="w-full px-4 py-3 rounded-lg bg-[#1b2a52] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400"
+                required
+              />
+
+              <input
+                type="password"
+                placeholder="Password"
+                className="w-full px-4 py-3 rounded-lg bg-[#1b2a52] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400"
+                required
+              />
+
+              {activeTab === "signup" && (
+                <input
+                  type="text"
+                  placeholder="Photo URL"
+                  value={user.photo}
+                  onChange={(e) =>
+                    setUser({ ...user, photo: e.target.value })
+                  }
+                  className="w-full px-4 py-3 rounded-lg bg-[#1b2a52] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400"
+                  required
+                />
+              )}
+
+              <button
+                type="submit"
+                className="w-full py-3 rounded-lg bg-gradient-to-r from-teal-400 to-green-500 text-black font-semibold hover:scale-105 transition-transform duration-300"
+              >
+                {activeTab === "login" ? "Sign In" : "Create Account"}
+              </button>
+            </form>
+          </div>
         </div>
-                        </div>
-    );
-};
+      ) : (
+        /* Profile View Page */
+        <div className="flex items-center justify-center py-20 px-4">
+          <div className="w-full max-w-md bg-[#0c1633] rounded-2xl shadow-2xl p-8 text-center">
+            <h2 className="text-2xl font-bold text-teal-400 mb-6">
+              Customer Profile
+            </h2>
 
-export default LoginSignup;
+            <img
+              src={
+                user.photo ||
+                "https://via.placeholder.com/150"
+              }
+              alt="Profile"
+              className="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-teal-400 object-cover"
+            />
+
+            <h3 className="text-xl font-semibold">{user.name || "User"}</h3>
+            <p className="text-gray-400 mt-2">{user.email}</p>
+
+            <button
+              onClick={() => setIsLoggedIn(false)}
+              className="mt-6 px-6 py-2 rounded-full bg-gradient-to-r from-teal-400 to-green-500 text-black font-semibold hover:scale-105 transition"
+            >
+              Logout
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+export default LoginSignup
