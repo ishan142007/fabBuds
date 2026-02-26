@@ -20,7 +20,7 @@ export const getCart = async (req, res) => {
     }
 }
 
-const addToCart = async (req, res) => {
+export const addToCart = async (req, res) => {
     try {
         const { productId, quantity } = req.body;
         if (!productId || !quantity) {
@@ -74,7 +74,7 @@ const addToCart = async (req, res) => {
 }
 export const updateCart = async (req, res) => {
     try {
-        const { itenId } = req.body;
+        const { itemId } = req.body;
         const { quantity } = req.body;
         if (!quantity || quantity < 1) {
             return res.status(400).json({
@@ -89,7 +89,7 @@ export const updateCart = async (req, res) => {
                 success: false
             })
         }
-        const itemIndex = cart.item.findIndex(item => item._id.toString() === itenId.toString());
+        const itemIndex = cart.item.findIndex(item => item._id.toString() === itemId.toString());
         if (itemIndex > -1) {
             cart.item[itemIndex].quantity = quantity;
         } else {
