@@ -1,8 +1,7 @@
-<<<<<<< HEAD
+
 import Cart from "../modals/cart.modal.js";
-=======
+
 import Cart from "../models/cart.modal.js";
->>>>>>> e514dbf341acd516880123592feac0b055e1453c
 import Product from "../models/product.model.js";
 export const getCart = async (req, res) => {
     try {
