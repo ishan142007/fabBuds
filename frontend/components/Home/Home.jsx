@@ -1,11 +1,55 @@
-import React from 'react'
+import React from "react";
 
-function Home() {
+const Home = () => {
   return (
-    <>
-      
-    </>
-  )
-}
+    <div className="min-h-screen bg-gradient-to-r from-gray-900 via-gray-800 to-black text-white">
 
-export default Home
+      <nav className="flex justify-between items-center px-8 py-4 bg-black/40 backdrop-blur-md shadow-lg">
+
+        <h1 className="text-2xl font-bold text-pink-500">
+          FabBuds        </h1>
+
+        <div className="space-x-6">
+          <a href="#" className="hover:text-pink-400 transition">Home</a>
+          <a href="#" className="hover:text-pink-400 transition">Explore</a>
+          <a herf="#" className="hover:text-pink-400 transition">Artist</a>
+          <a href="#" className="hover:text-pink-400 transition">Login</a>
+        </div>
+
+      </nav>
+
+
+      <div className="flex flex-col justify-center items-center text-center h-[85vh] px-4">
+
+        <h1 className="text-5xl md:text-6xl font-bold mb-4">
+          Welcome to <span className="text-pink-500">FabBuds</span>
+        </h1>
+
+        <h2 className="text-2xl md:text-3xl text-pink-400 mb-6">
+          Save Our Real Art
+        </h2>
+
+        <p className="max-w-xl text-gray-300 mb-8">
+          Discover handmade creations from talented local artists.
+          Support creativity, empower communities, and preserve real art.
+        </p>
+
+        <div className="space-x-4">
+
+          <button className="bg-pink-500 hover:bg-pink-600 px-6 py-3 rounded-lg font-semibold shadow-lg transition">
+            Explore A
+          </button>
+
+          <button className="border border-pink-500 hover:bg-pink-500 px-6 py-3 rounded-lg font-semibold transition">
+            Become Artist
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+  );
+};
+
+export default Home;

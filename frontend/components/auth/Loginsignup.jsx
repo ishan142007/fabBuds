@@ -62,7 +62,9 @@ const LoginSignup = () => {
                 </div>
 
 
-            
+    <div>
+
+            </div>
                 <form className="mt-6 space-y-4">
 
                     {!isLogin && (
