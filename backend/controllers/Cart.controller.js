@@ -3,13 +3,13 @@ import Cart from "../models/cart.modal.js";
 import Product from "../models/product.model.js";
 export const getCart = async (req, res) => {
     try {
-        let cart = await Cart.findOne({ UserId: req.user._id });
+        let cart = await Cart.findOne({ UserId: req.user.id });
         if (!cart) {
-            cart = await Cart.create({ UserId: req.user._id, item: [] });
+            cart = await Cart.create({ UserId: req.user.id, item: [] });
         }
         return res.status(200).json({
             message: "Cart retrived successfully",
-            sucess: true,
+            success: true,
             cart: cart
         })
 
@@ -43,11 +43,11 @@ export const addToCart = async (req, res) => {
                 success: false
             })
         }
-        let cart = await Cart.findOne({ UserId: req.user._id });
+        let cart = await Cart.findOne({ UserId: req.user.id });
         if (!cart) {
-            cart = await Cart.create({ UserId: req.user._id, item: [] });
+            cart = await Cart.create({ UserId: req.user.id, item: [] });
         }
-        const existingItemIndex = cart.item.findIndex(item => item.productId.toString() === productId.toString());
+        const existingItemIndex = cart.item.findIndex(item => item.ProductId.toString() === productId.toString());
         if (existingItemIndex > -1) {
             cart.item[existingItemIndex].quantity += quantity;
         } else {
@@ -90,7 +90,7 @@ export const updateCart = async (req, res) => {
                 success: false
             })
         }
-        const itemIndex = cart.item.findIndex(item => item._id.toString() === itemId.toString());
+        const itemIndex = cart.item.findIndex(item => item.id.toString() === itemId.toString());
         if (itemIndex > -1) {
             cart.item[itemIndex].quantity = quantity;
         } else {
@@ -129,7 +129,7 @@ export const removeFromCart = async (req, res) => {
             })
         }
 
-        let cart = await Cart.findOne({ UserId: req.user._id });
+        let cart = await Cart.findOne({ UserId: req.user.id });
         if (!cart) {
             return res.status(404).json({
                 message: "Cart not found",
@@ -137,7 +137,7 @@ export const removeFromCart = async (req, res) => {
             })
         }
 
-        const itemIndex = cart.item.findIndex(item => item._id.toString() === itemId.toString());
+        const itemIndex = cart.item.findIndex(item => item.id.toString() === itemId.toString());
         if (itemIndex > -1) {
             cart.item.splice(itemIndex, 1); // 1 item ko remove kero
         } else {
@@ -164,7 +164,7 @@ export const removeFromCart = async (req, res) => {
 }
 export const clearCart=async(req,res)=>{
     try{
-        let cart=await Cart.findOne({UserId:req.user._id});
+        let cart=await Cart.findOne({UserId:req.user.id});
         if (!cart){
             return res.status(404).json({
                 message:"Cart not found",

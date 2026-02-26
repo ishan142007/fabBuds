@@ -1,7 +1,10 @@
 import jwt from "jsonwebtoken"
 export const verifyToken =(req,res,next)=>{
     try{
-        const token = req.header.authorization;
+        let token = req.headers.authorization;
+        token=token.split(" ")[1];
+        
+        
         if (!token){
             return res.status(401).json({
                 message:"Unauthorized access",
@@ -9,9 +12,11 @@ export const verifyToken =(req,res,next)=>{
             })
 
         }
-        const decoded=jwt.verify(token,process.env.JWT_SECRET_KEY);
-        req.user=decoded;
-        next();
+        jwt.verify(token,process.env.JWT_SECRET_TOKEN,(err,decoded)=>{
+            req.user=decoded;
+            console.log(req.user)
+            next();
+        });
     }catch (error){
         return res.status(401).json({
             message:"Invalid token",
