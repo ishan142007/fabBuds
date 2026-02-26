@@ -79,9 +79,9 @@
 //     deleteOrder
 // };
 
-import Order from "../models/order.models";
-import cart from "../models/cart.modal";
-import Product from "../models/product.model";
+import Order from "../models/order.models.js";
+import cart from "../models/cart.modal.js";
+import Product from "../models/product.model.js";
 export const createOrder = async (req, res) => {
     try {
         const { shippingaddress } = req.body;
