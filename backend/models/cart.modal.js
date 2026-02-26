@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import User from "./user.model";
-import Product from "./product.model";
+import User from "./user.model.js";
+import Product from "./product.model.js";
 const cartSchema = new mongoose.Schema({
     UserId: {
         type: mongoose.Schema.Types.ObjectId,
@@ -23,7 +23,7 @@ const cartSchema = new mongoose.Schema({
         }
     ],
     totalprice:{
-        default:0,
+        // default:0,
 
 
     }

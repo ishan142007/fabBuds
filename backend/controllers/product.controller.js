@@ -1,4 +1,4 @@
-import Product from "../models/product.model";
+import Product from "../models/product.model.js";
 
 export const getAllProducts = async (req, res) => {//api hai get all product 
     try {
