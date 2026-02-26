@@ -1,5 +1,5 @@
-import Cart from "../modals/cart.modal";
-import Product from "../models/product.model";
+import Cart from "../models/cart.modal.js";
+import Product from "../models/product.model.js";
 export const getCart = async (req, res) => {
     try {
         let cart = await Cart.findOne({ UserId: req.user._id });

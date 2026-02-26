@@ -1,6 +1,6 @@
 import express from "express";
-import { getCart,addToCart,removeFromCart,updateCart,clearCart } from "../controllers/Cart.controller";
-import  verifyToken  from "../Middleware/verifyToken.middle";
+import { getCart,addToCart,removeFromCart,updateCart,clearCart } from "../controllers/Cart.controller.js";
+import { verifyToken}  from "../Middleware/verifyToken.middle.js";
 const router=express.Router();
 router.get("/",verifyToken,getCart);
 router.post ("/add",verifyToken,addToCart);
