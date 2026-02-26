@@ -2,18 +2,17 @@ import React from "react";
 
 const Home = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-r from-gray-900 via-gray-800 to-black text-white">
-
+    <div className="min-h-screen flex items-center justify-center bg-gradient">
       <nav className="flex justify-between items-center px-8 py-4 bg-black/40 backdrop-blur-md shadow-lg">
 
-        <h1 className="text-2xl font-bold text-pink-500">
+        <h1 className="bg-gradient-to-r from-cyan-400 to-emerald-400 text-black font-semibold">
           FabBuds        </h1>
 
         <div className="space-x-6">
-          <a href="#" className="hover:text-pink-400 transition">Home</a>
-          <a href="#" className="hover:text-pink-400 transition">Explore</a>
-          <a herf="#" className="hover:text-pink-400 transition">Artist</a>
-          <a href="#" className="hover:text-pink-400 transition">Login</a>
+          <a href="#" className="bg-gradient-to-r from-cyan-400 to-emerald-400 text-black font-semibold">Home</a>
+          <a href="#" className="bg-gradient-to-r from-cyan-400 to-emerald-400 text-black font-semibold">Explore</a>
+          <a herf="#" className="bg-gradient-to-r from-cyan-400 to-emerald-400 text-black font-semibold">Artist</a>
+          <a href="#" className="bg-gradient-to-r from-cyan-400 to-emerald-400 text-black font-semibold">Login</a>
         </div>
 
       </nav>
@@ -36,11 +35,11 @@ const Home = () => {
 
         <div className="space-x-4">
 
-          <button className="bg-pink-500 hover:bg-pink-600 px-6 py-3 rounded-lg font-semibold shadow-lg transition">
-            Explore A
+          <button className="bg-green-500 hover:bg-pink-600 px-6 py-3 rounded-lg font-semibold shadow-lg transition">
+            Explore Art
           </button>
 
-          <button className="border border-pink-500 hover:bg-pink-500 px-6 py-3 rounded-lg font-semibold transition">
+          <button className="border border-green-500 hover:bg-pink-500 px-6 py-3 rounded-lg font-semibold transition">
             Become Artist
           </button>
 
