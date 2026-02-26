@@ -9,10 +9,11 @@ function App() {
 
   return (
     <>
-      <LoginSignup />
+      <LoginSignup/>
       <Admin/>
       
       <Home/>
+      
     </>
   )
 }
