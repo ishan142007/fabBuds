@@ -7,19 +7,7 @@ const LoginSignup = () => {
 
     return (
         <div>
-              <header className="flex justify-between items-center px-8 py-4 bg-[#0c1633]/80 backdrop-blur-md shadow-lg">
-        <h1 className="text-2xl font-bold tracking-wide">FABBUDS</h1>
-        <nav className="space-x-6">
-          <button className="hover:text-teal-400 transition">Home</button>
-          <button
-            onClick={() => setActiveTab("login")}
-            className="hover:text-teal-400 transition"
-          >
-            Login
-          </button>
-          <button className="hover:text-teal-400 transition">About</button>
-        </nav>
-      </header>
+          
 
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 to-blue-900">
 
