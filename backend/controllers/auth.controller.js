@@ -35,7 +35,7 @@ export const signup = async (req, res) => {
                 success: false
             })
         }
-        if (!email.includes("@")) {
+        if (!/\S+@\S+\.\S+/.test(email)) {
             return res.status(400).json({
                 message: "Enter valid email",
                 success: false
