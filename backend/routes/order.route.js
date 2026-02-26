@@ -1,4 +1,4 @@
-import { getOrder,getOrders } from "../controllers/order.controller";
+import { createOrder,getOrder,getOrders } from "../controllers/order.controller";
 import express from "express";
 import verifyToken from "../Middleware/verifyToken.middle";
 const router=express.Router();

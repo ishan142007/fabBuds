@@ -82,7 +82,7 @@
 import Order from "../models/order.models";
 import cart from "../models/cart.modal";
 import Product from "../models/product.model";
-export const createorder = async (req, res) => {
+export const createOrder = async (req, res) => {
     try {
         const { shippingaddress } = req.body;
         const cartItems = await cart.find({ UserId: req.user._id });

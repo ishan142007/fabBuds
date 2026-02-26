@@ -20,7 +20,7 @@ export const getCart = async (req, res) => {
     }
 }
 
-const addToCart = async (req, res) => {
+export const addToCart = async (req, res) => {
     try {
         const { productId, quantity } = req.body;
         if (!productId || !quantity) {
