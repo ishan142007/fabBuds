@@ -21,10 +21,10 @@ const Home = () => {
       <div className="flex flex-col justify-center items-center text-center h-[85vh] px-4">
 
         <h1 className="text-5xl md:text-6xl font-bold mb-4">
-          Welcome to <span className="text-pink-500">FabBuds</span>
+          Welcome to <span className="text-green-500">FabBuds</span>
         </h1>
 
-        <h2 className="text-2xl md:text-3xl text-pink-400 mb-6">
+        <h2 className="text-2xl md:text-3xl text-green-400 mb-6">
           Save Our Real Art
         </h2>
 
@@ -35,11 +35,11 @@ const Home = () => {
 
         <div className="space-x-4">
 
-          <button className="bg-green-500 hover:bg-pink-600 px-6 py-3 rounded-lg font-semibold shadow-lg transition">
+          <button className="bg-green-500 hover:bg-green-600 px-6 py-3 rounded-lg font-semibold shadow-lg transition">
             Explore Art
           </button>
 
-          <button className="border border-green-500 hover:bg-pink-500 px-6 py-3 rounded-lg font-semibold transition">
+          <button className="border border-green-500 hover:bg-green-500 px-6 py-3 rounded-lg font-semibold transition">
             Become Artist
           </button>
 
