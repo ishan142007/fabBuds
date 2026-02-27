@@ -1,6 +1,8 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const EcommerceHome = () => {
+  const navigate=useNavigate()
 
   const products = [
     {
@@ -76,8 +78,8 @@ const EcommerceHome = () => {
         </h1>
 
         <div className="space-x-6">
-          <button className="hover:text-cyan-400">Home</button>
-          <button className="hover:text-cyan-400">Cart</button>
+          <button className="hover:text-cyan-400" onClick={()=>navigate("/LoginSignup")}>login</button>
+          <button className="hover:text-cyan-400"onClick={()=>navigate("/Cart")}>Cart</button>
           <button className="hover:text-cyan-400">Profile</button>
         </div>
 
