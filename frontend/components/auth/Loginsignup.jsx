@@ -1,19 +1,72 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
  function LoginSignup({setlogin}) {
   const [activeTab, setActiveTab] = useState("login");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate=useNavigate()
   const [user, setUser] = useState({
-    name: "",
+    fullname: "",
     email: "",
     password:"",
     photo: "",
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    setIsLoggedIn(true);
-    setlogin(true)
+    const {fullname,email,password,photo}=user;
+    if(activeTab==="signup"){
+      try {
+        const res1=await axios.post("http://localhost:3000/api/auth/signup",{fullname,email,password,photo})
+        if(res1.data.token){
+          localStorage.setItem("token",res1.data.token);
+
+          setlogin(true)
+          setIsLoggedIn(true);
+          navigate('/')
+        }
+        // res1.status(200).json({Message:"data sent"})
+        
+      } catch (error) {
+        // res.status(400).json({Message:"error",error,error})
+      }
+
+    }
+    else{
+      const token=localStorage.getItem("token");
+      if(!token){
+        setActiveTab("signup")
+        return
+      }
+      else
+      {
+        await axios.get("http://localhost:3000/api/auth/verify",{
+          headers:{
+            Authorization:`Bearer ${token}`
+          }
+        })
+        .catch(()=>{
+          localStorage.removeItem("token");
+          setActiveTab("signup");
+        })
+      }
+      try {
+        const res=await axios.post("http://localhost:3000/api/auth/login",{email,password},
+          {
+            headers:{
+              Authorization:`Bearer ${token}`
+            }
+          }
+        )
+        
+      } catch (error) {
+         res.status(400).json({Message:"error",error,error})
+        
+      }
+    }
+
+
 
   };
 
@@ -60,9 +113,9 @@ import { useState } from "react";
                 <input
                   type="text"
                   placeholder="Full Name"
-                  value={user.name}
+                  value={user.fullname}
                   onChange={(e) =>
-                    setUser({ ...user, name: e.target.value })
+                    setUser({ ...user, fullname: e.target.value })
                   }
                   className="w-full px-4 py-3 rounded-lg bg-[#1b2a52] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400"
                   required
@@ -97,7 +150,7 @@ import { useState } from "react";
                     setUser({ ...user, photo: e.target.value })
                   }
                   className="w-full px-4 py-3 rounded-lg bg-[#1b2a52] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400"
-                  required
+                  // required
                 />
               )}
 

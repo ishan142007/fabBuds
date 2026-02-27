@@ -137,6 +137,9 @@ export const login = async (req, res) => {
         })
     }
 }
+export const check=async(req,res)=>{
+    res.status(200).json({message:"verified",data:req.body});
+}
 
 export const logout = async (req, res) => {
     return res.status(200).json({

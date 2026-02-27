@@ -5,12 +5,13 @@ import authRoute from "./routes/auth.route.js"
 import productRoute from "./routes/product.route.js"
 import cartRoute from "./routes/cart.route.js"
 import orderRoute from "./routes/order.route.js"
+import cors from "cors"
 
 dotenv.config()
 
 const PORT = process.env.PORT || 3000
 const app = express();
-
+app.use(cors())
 
 app.use(express.json());
 app.use("/api/auth",authRoute);
