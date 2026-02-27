@@ -1,17 +1,20 @@
 import { useState } from "react";
 
- function LoginSignup() {
+ function LoginSignup({setlogin}) {
   const [activeTab, setActiveTab] = useState("login");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState({
     name: "",
     email: "",
+    password:"",
     photo: "",
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsLoggedIn(true);
+    setlogin(true)
+
   };
 
   return (
@@ -24,7 +27,7 @@ import { useState } from "react";
         <div className="flex items-center justify-center py-16 px-4">
           <div className="w-full max-w-md bg-[#0c1633] rounded-2xl shadow-2xl p-8">
             <h2 className="text-3xl font-bold text-center mb-2">
-              Welcome to the <span className="text-teal-400">Future</span>
+              Welcome to the <span className="text-teal-400">Fabbuds</span>
             </h2>
 
             {/* Toggle */}
@@ -81,6 +84,7 @@ import { useState } from "react";
                 type="password"
                 placeholder="Password"
                 className="w-full px-4 py-3 rounded-lg bg-[#1b2a52] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400"
+                onChange={(e)=>setUser({...user,password:e.target.value})}
                 required
               />
 
