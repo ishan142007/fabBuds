@@ -3,15 +3,19 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function LoginSignup({ setlogin }) {
+
   const [activeTab, setActiveTab] = useState("login");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [role,setRole]=useState(""); 
   const navigate = useNavigate();
 
   const [user, setUser] = useState({
+
     fullname: "",
     email: "",
     password: "",
     photo: "",
+
   });
 
   const handleSubmit = async (e) => {
@@ -72,7 +76,7 @@ function LoginSignup({ setlogin }) {
             <h2 className="text-3xl font-bold text-center mb-2">
               Welcome to the <span className="text-teal-400">Fabbuds</span>
             </h2>
-
+            
             {/* Toggle */}
             <div className="flex bg-[#1b2a52] rounded-full p-1 my-6">
               <button
@@ -83,7 +87,8 @@ function LoginSignup({ setlogin }) {
                     : "text-gray-300"
                 }`}
               >
-                Login
+
+              Login
               </button>
               <button
                 onClick={() => setActiveTab("signup")}
@@ -96,6 +101,7 @@ function LoginSignup({ setlogin }) {
                 Sign Up
               </button>
             </div>
+
 
             {/* Form */}
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -110,6 +116,8 @@ function LoginSignup({ setlogin }) {
                   className="w-full px-4 py-3 rounded-lg bg-[#1b2a52]"
                   required
                 />
+                
+                
               )}
 
               <input
@@ -122,7 +130,7 @@ function LoginSignup({ setlogin }) {
                 className="w-full px-4 py-3 rounded-lg bg-[#1b2a52]"
                 required
               />
-
+              
               <input
                 type="password"
                 placeholder="Password"
@@ -133,6 +141,19 @@ function LoginSignup({ setlogin }) {
                 className="w-full px-4 py-3 rounded-lg bg-[#1b2a52]"
                 required
               />
+
+              <select value={role}
+              onChange={(e)=>
+                setRole(e.target.value)
+              } className="w-full px-4 py-3 rounded-lg bg-[#1b2a52]">
+                <option value="">Choose Role</option>
+                <option value="User">User</option>
+                <option value="seller">Seller</option>
+                <option value="admin">Admin</option>
+
+              </select>
+             
+              
 
               {activeTab === "signup" && (
                 <input
@@ -145,6 +166,7 @@ function LoginSignup({ setlogin }) {
                   className="w-full px-4 py-3 rounded-lg bg-[#1b2a52]"
                 />
               )}
+              
 
               <button
                 type="submit"
