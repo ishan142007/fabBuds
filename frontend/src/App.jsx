@@ -6,8 +6,6 @@ import Home from '../components/Home/Home'
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
 import Cart from '../components/Cart/Cart'
 
-
-
 function App() {
   const [login, setlogin] = useState(false)
   const navigate=useNavigate();
