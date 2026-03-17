@@ -1,12 +1,12 @@
 import { useState } from "react";
 
- function LoginSignup({setlogin}) {
+function LoginSignup({ setlogin }) {
   const [activeTab, setActiveTab] = useState("login");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState({
     name: "",
     email: "",
-    password:"",
+    password: "",
     photo: "",
   });
 
@@ -20,7 +20,7 @@ import { useState } from "react";
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0f1c3f] to-[#1e3a8a] text-white">
       {/* Header */}
-     
+
 
       {/* If Not Logged In → Show Login/Signup */}
       {!isLoggedIn ? (
@@ -34,21 +34,19 @@ import { useState } from "react";
             <div className="flex bg-[#1b2a52] rounded-full p-1 my-6">
               <button
                 onClick={() => setActiveTab("login")}
-                className={`flex-1 py-2 rounded-full transition-all duration-300 ${
-                  activeTab === "login"
+                className={`flex-1 py-2 rounded-full transition-all duration-300 ${activeTab === "login"
                     ? "bg-gradient-to-r from-teal-400 to-green-500 text-black"
                     : "text-gray-300"
-                }`}
+                  }`}
               >
                 Login
               </button>
               <button
                 onClick={() => setActiveTab("signup")}
-                className={`flex-1 py-2 rounded-full transition-all duration-300 ${
-                  activeTab === "signup"
+                className={`flex-1 py-2 rounded-full transition-all duration-300 ${activeTab === "signup"
                     ? "bg-gradient-to-r from-teal-400 to-green-500 text-black"
                     : "text-gray-300"
-                }`}
+                  }`}
               >
                 Sign Up
               </button>
@@ -84,7 +82,7 @@ import { useState } from "react";
                 type="password"
                 placeholder="Password"
                 className="w-full px-4 py-3 rounded-lg bg-[#1b2a52] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400"
-                onChange={(e)=>setUser({...user,password:e.target.value})}
+                onChange={(e) => setUser({ ...user, password: e.target.value })}
                 required
               />
 
