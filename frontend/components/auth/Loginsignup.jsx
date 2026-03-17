@@ -2,80 +2,70 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
- function LoginSignup({setlogin}) {
+function LoginSignup({ setlogin }) {
   const [activeTab, setActiveTab] = useState("login");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const navigate=useNavigate()
+  const navigate = useNavigate();
+
   const [user, setUser] = useState({
     fullname: "",
     email: "",
-    password:"",
+    password: "",
     photo: "",
   });
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const {fullname,email,password,photo}=user;
-    if(activeTab==="signup"){
-      try {
-        const res1=await axios.post("http://localhost:3000/api/auth/signup",{fullname,email,password,photo})
-        if(res1.data.token){
-          localStorage.setItem("token",res1.data.token);
+    const { fullname, email, password, photo } = user;
 
-          setlogin(true)
+    // ================= SIGNUP =================
+    if (activeTab === "signup") {
+      try {
+        const res = await axios.post(
+          "http://localhost:3000/api/auth/signup",
+          { fullname, email, password, photo }
+        );
+
+        if (res.data.token) {
+          localStorage.setItem("token", res.data.token);
+          setlogin(true);
           setIsLoggedIn(true);
-          navigate('/')
+          navigate("/");
         }
-        // res1.status(200).json({Message:"data sent"})
-        
       } catch (error) {
-        // res.status(400).json({Message:"error",error,error})
+        console.log(error.response?.data || error.message);
       }
-
     }
-    else{
-      const token=localStorage.getItem("token");
-      if(!token){
-        setActiveTab("signup")
-        return
-      }
-      else
-      {
-        await axios.get("http://localhost:3000/api/auth/verify",{
-          headers:{
-            Authorization:`Bearer ${token}`
-          }
-        })
-        .catch(()=>{
-          localStorage.removeItem("token");
-          setActiveTab("signup");
-        })
-      }
+
+    // ================= LOGIN =================
+    else {
       try {
-        const res=await axios.post("http://localhost:3000/api/auth/login",{email,password},
-          {
-            headers:{
-              Authorization:`Bearer ${token}`
-            }
-          }
-        )
-        
+        const res = await axios.post(
+          "http://localhost:3000/api/auth/login",
+          { email, password }
+        );
+
+        if (res.data.user.token) {
+          localStorage.setItem("token", res.data.token);
+          setlogin(true);
+          setIsLoggedIn(true);
+          navigate("/");
+        }
       } catch (error) {
-         res.status(400).json({Message:"error",error,error})
-        
+        console.log(error.response?.data || error.message);
       }
     }
+  };
 
-
-
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
+    setlogin(false);
+    navigate("/login");
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0f1c3f] to-[#1e3a8a] text-white">
-      {/* Header */}
-     
-
-      {/* If Not Logged In → Show Login/Signup */}
       {!isLoggedIn ? (
         <div className="flex items-center justify-center py-16 px-4">
           <div className="w-full max-w-md bg-[#0c1633] rounded-2xl shadow-2xl p-8">
@@ -117,7 +107,7 @@ import axios from "axios";
                   onChange={(e) =>
                     setUser({ ...user, fullname: e.target.value })
                   }
-                  className="w-full px-4 py-3 rounded-lg bg-[#1b2a52] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400"
+                  className="w-full px-4 py-3 rounded-lg bg-[#1b2a52]"
                   required
                 />
               )}
@@ -129,15 +119,18 @@ import axios from "axios";
                 onChange={(e) =>
                   setUser({ ...user, email: e.target.value })
                 }
-                className="w-full px-4 py-3 rounded-lg bg-[#1b2a52] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400"
+                className="w-full px-4 py-3 rounded-lg bg-[#1b2a52]"
                 required
               />
 
               <input
                 type="password"
                 placeholder="Password"
-                className="w-full px-4 py-3 rounded-lg bg-[#1b2a52] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400"
-                onChange={(e)=>setUser({...user,password:e.target.value})}
+                value={user.password}
+                onChange={(e) =>
+                  setUser({ ...user, password: e.target.value })
+                }
+                className="w-full px-4 py-3 rounded-lg bg-[#1b2a52]"
                 required
               />
 
@@ -149,14 +142,13 @@ import axios from "axios";
                   onChange={(e) =>
                     setUser({ ...user, photo: e.target.value })
                   }
-                  className="w-full px-4 py-3 rounded-lg bg-[#1b2a52] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400"
-                  // required
+                  className="w-full px-4 py-3 rounded-lg bg-[#1b2a52]"
                 />
               )}
 
               <button
                 type="submit"
-                className="w-full py-3 rounded-lg bg-gradient-to-r from-teal-400 to-green-500 text-black font-semibold hover:scale-105 transition-transform duration-300"
+                className="w-full py-3 rounded-lg bg-gradient-to-r from-teal-400 to-green-500 text-black font-semibold"
               >
                 {activeTab === "login" ? "Sign In" : "Create Account"}
               </button>
@@ -164,7 +156,7 @@ import axios from "axios";
           </div>
         </div>
       ) : (
-        /* Profile View Page */
+        // Profile Page
         <div className="flex items-center justify-center py-20 px-4">
           <div className="w-full max-w-md bg-[#0c1633] rounded-2xl shadow-2xl p-8 text-center">
             <h2 className="text-2xl font-bold text-teal-400 mb-6">
@@ -172,20 +164,19 @@ import axios from "axios";
             </h2>
 
             <img
-              src={
-                user.photo ||
-                "https://via.placeholder.com/150"
-              }
+              src={user.photo || "https://via.placeholder.com/150"}
               alt="Profile"
               className="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-teal-400 object-cover"
             />
 
-            <h3 className="text-xl font-semibold">{user.name || "User"}</h3>
+            <h3 className="text-xl font-semibold">
+              {user.fullname || "User"}
+            </h3>
             <p className="text-gray-400 mt-2">{user.email}</p>
 
             <button
-              onClick={() => setIsLoggedIn(false)}
-              className="mt-6 px-6 py-2 rounded-full bg-gradient-to-r from-teal-400 to-green-500 text-black font-semibold hover:scale-105 transition"
+              onClick={handleLogout}
+              className="mt-6 px-6 py-2 rounded-full bg-gradient-to-r from-teal-400 to-green-500 text-black font-semibold"
             >
               Logout
             </button>
@@ -195,4 +186,5 @@ import axios from "axios";
     </div>
   );
 }
-export default LoginSignup
+
+export default LoginSignup;

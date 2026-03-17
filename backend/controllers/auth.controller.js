@@ -2,9 +2,11 @@ import User from "../models/user.model.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
-const generateToken = (userId) => {
+const generateToken = (userId,role) => {
     const token = jwt.sign(
-        { id: userId },
+        { id: userId,
+            role:user.role
+         },
         process.env.JWT_SECRET_TOKEN,
         { expiresIn: "10d" }
     )
@@ -115,7 +117,7 @@ export const login = async (req, res) => {
             })
         }
 
-        const token = generateToken(findUser._id);
+        const token = generateToken(findUser._id,role);
 
         return res.status(200).json({
             message: "Login successfully",

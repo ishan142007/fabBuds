@@ -1,8 +1,7 @@
 import jwt from "jsonwebtoken"
 export const verifyToken =(req,res,next)=>{
     try{
-        let token = req.headers.authorization;
-        token=token.split(" ")[1];
+        let token = req.headers.authorization || req.headers.Authorization;
         
         
         if (!token){
@@ -10,8 +9,9 @@ export const verifyToken =(req,res,next)=>{
                 message:"Unauthorized access",
                 success:false
             })
-
+            
         }
+        token=token.split(" ")[1];
         jwt.verify(token,process.env.JWT_SECRET_TOKEN,(err,decoded)=>{
             req.user=decoded;
             console.log(req.user)
