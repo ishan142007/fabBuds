@@ -41,7 +41,11 @@ export default function Chatbox() {
   };
 
   return (
+    
+    <div className="fixed bottom-16 right-5 w-80 bg-white shadow-lg rounded-lg">
+      
     <div style={{ width: "400px", margin: "auto", fontFamily: "Arial" }}>
+      
       
       {/* Chat Box */}
       <div
@@ -108,6 +112,7 @@ export default function Chatbox() {
           Send
         </button>
       </div>
+    </div>
     </div>
   );
 }
