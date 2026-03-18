@@ -6,28 +6,25 @@ function LoginSignup({ setlogin }) {
 
   const [activeTab, setActiveTab] = useState("login");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [role,setRole]=useState(""); 
+  const [role, setRole] = useState("");
   const navigate = useNavigate();
 
   const [user, setUser] = useState({
-
     fullname: "",
     email: "",
     password: "",
     photo: "",
-
   });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { fullname, email, password, photo } = user;
 
-    // ================= SIGNUP =================
     if (activeTab === "signup") {
       try {
         const res = await axios.post(
           "http://localhost:3000/api/auth/signup",
-          { fullname, email, password, photo }
+          { fullname, email, password, photo, role }
         );
 
         if (res.data.token) {
@@ -39,17 +36,14 @@ function LoginSignup({ setlogin }) {
       } catch (error) {
         console.log(error.response?.data || error.message);
       }
-    }
-
-    // ================= LOGIN =================
-    else {
+    } else {
       try {
         const res = await axios.post(
           "http://localhost:3000/api/auth/login",
           { email, password }
         );
 
-        if (res.data.user.token) {
+        if (res.data.token) {
           localStorage.setItem("token", res.data.token);
           setlogin(true);
           setIsLoggedIn(true);
@@ -69,42 +63,45 @@ function LoginSignup({ setlogin }) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0f1c3f] to-[#1e3a8a] text-white">
+    <div className="min-h-screen bg-gray-100 text-gray-800">
+
       {!isLoggedIn ? (
         <div className="flex items-center justify-center py-16 px-4">
-          <div className="w-full max-w-md bg-[#0c1633] rounded-2xl shadow-2xl p-8">
-            <h2 className="text-3xl font-bold text-center mb-2">
-              Welcome to the <span className="text-teal-400">Fabbuds</span>
+
+          <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
+
+            <h2 className="text-3xl font-bold text-center mb-2 text-blue-600">
+              Welcome to FABBUDS
             </h2>
-            
+
             {/* Toggle */}
-            <div className="flex bg-[#1b2a52] rounded-full p-1 my-6">
+            <div className="flex bg-gray-200 rounded-full p-1 my-6">
               <button
                 onClick={() => setActiveTab("login")}
-                className={`flex-1 py-2 rounded-full transition-all duration-300 ${
+                className={`flex-1 py-2 rounded-full transition ${
                   activeTab === "login"
-                    ? "bg-gradient-to-r from-teal-400 to-green-500 text-black"
-                    : "text-gray-300"
+                    ? "bg-blue-500 text-white"
+                    : "text-gray-600"
                 }`}
               >
-
-              Login
+                Login
               </button>
+
               <button
                 onClick={() => setActiveTab("signup")}
-                className={`flex-1 py-2 rounded-full transition-all duration-300 ${
+                className={`flex-1 py-2 rounded-full transition ${
                   activeTab === "signup"
-                    ? "bg-gradient-to-r from-teal-400 to-green-500 text-black"
-                    : "text-gray-300"
+                    ? "bg-blue-500 text-white"
+                    : "text-gray-600"
                 }`}
               >
                 Sign Up
               </button>
             </div>
 
-
             {/* Form */}
             <form onSubmit={handleSubmit} className="space-y-4">
+
               {activeTab === "signup" && (
                 <input
                   type="text"
@@ -113,11 +110,9 @@ function LoginSignup({ setlogin }) {
                   onChange={(e) =>
                     setUser({ ...user, fullname: e.target.value })
                   }
-                  className="w-full px-4 py-3 rounded-lg bg-[#1b2a52]"
+                  className="w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-400"
                   required
                 />
-                
-                
               )}
 
               <input
@@ -127,10 +122,10 @@ function LoginSignup({ setlogin }) {
                 onChange={(e) =>
                   setUser({ ...user, email: e.target.value })
                 }
-                className="w-full px-4 py-3 rounded-lg bg-[#1b2a52]"
+                className="w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-400"
                 required
               />
-              
+
               <input
                 type="password"
                 placeholder="Password"
@@ -138,22 +133,20 @@ function LoginSignup({ setlogin }) {
                 onChange={(e) =>
                   setUser({ ...user, password: e.target.value })
                 }
-                className="w-full px-4 py-3 rounded-lg bg-[#1b2a52]"
+                className="w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-400"
                 required
               />
 
-              <select value={role}
-              onChange={(e)=>
-                setRole(e.target.value)
-              } className="w-full px-4 py-3 rounded-lg bg-[#1b2a52]">
+              <select
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+                className="w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-400"
+              >
                 <option value="">Choose Role</option>
                 <option value="User">User</option>
                 <option value="seller">Seller</option>
                 <option value="admin">Admin</option>
-
               </select>
-             
-              
 
               {activeTab === "signup" && (
                 <input
@@ -163,48 +156,56 @@ function LoginSignup({ setlogin }) {
                   onChange={(e) =>
                     setUser({ ...user, photo: e.target.value })
                   }
-                  className="w-full px-4 py-3 rounded-lg bg-[#1b2a52]"
+                  className="w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-400"
                 />
               )}
-              
 
               <button
                 type="submit"
-                className="w-full py-3 rounded-lg bg-gradient-to-r from-teal-400 to-green-500 text-black font-semibold"
+                className="w-full py-3 rounded-lg bg-blue-500 text-white font-semibold hover:bg-blue-600 transition"
               >
                 {activeTab === "login" ? "Sign In" : "Create Account"}
               </button>
             </form>
+
           </div>
         </div>
       ) : (
+
         // Profile Page
         <div className="flex items-center justify-center py-20 px-4">
-          <div className="w-full max-w-md bg-[#0c1633] rounded-2xl shadow-2xl p-8 text-center">
-            <h2 className="text-2xl font-bold text-teal-400 mb-6">
+
+          <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8 text-center">
+
+            <h2 className="text-2xl font-bold text-blue-600 mb-6">
               Customer Profile
             </h2>
 
             <img
               src={user.photo || "https://via.placeholder.com/150"}
               alt="Profile"
-              className="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-teal-400 object-cover"
+              className="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-blue-400 object-cover"
             />
 
             <h3 className="text-xl font-semibold">
               {user.fullname || "User"}
             </h3>
-            <p className="text-gray-400 mt-2">{user.email}</p>
+
+            <p className="text-gray-500 mt-2">
+              {user.email}
+            </p>
 
             <button
               onClick={handleLogout}
-              className="mt-6 px-6 py-2 rounded-full bg-gradient-to-r from-teal-400 to-green-500 text-black font-semibold"
+              className="mt-6 px-6 py-2 rounded-full bg-red-500 text-white font-semibold hover:bg-red-600 transition"
             >
               Logout
             </button>
+
           </div>
         </div>
       )}
+
     </div>
   );
 }

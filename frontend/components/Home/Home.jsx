@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const EcommerceHome = () => {
-  const navigate=useNavigate()
+  const navigate = useNavigate();
 
   const products = [
     {
@@ -32,8 +32,6 @@ const EcommerceHome = () => {
       image: "https://images.unsplash.com/photo-1580136579312-94651dfd596d?w=500",
       rating: 4.7,
     },
-
-    // Bedsheet (correct image)
     {
       id: 4,
       name: "Block Print Bedsheet",
@@ -43,8 +41,6 @@ const EcommerceHome = () => {
       image: "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?w=500",
       rating: 4.4,
     },
-
-    // Handmade chappal / mojari
     {
       id: 5,
       name: "Handmade Mojari Chappal",
@@ -54,7 +50,6 @@ const EcommerceHome = () => {
       image: "https://images.unsplash.com/photo-1608256246200-53e635b5b65f?w=500",
       rating: 4.6,
     },
-
     {
       id: 6,
       name: "Meenakari Necklace",
@@ -66,31 +61,34 @@ const EcommerceHome = () => {
     },
   ];
 
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 text-white">
+    <div className="min-h-screen bg-gray-100 text-gray-800">
 
       {/* Navbar */}
-      <div className="flex justify-between items-center p-4 bg-slate-900/50 backdrop-blur-xl border-b border-cyan-400/20">
+      <div className="flex justify-between items-center p-4 bg-white shadow-sm border-b">
 
-        <h1 className="text-2xl font-bold text-cyan-400">
+        <h1 className="text-2xl font-bold text-blue-600">
           FABBUDS
         </h1>
 
         <div className="space-x-6">
-          <button className="hover:text-cyan-400" onClick={()=>navigate("/LoginSignup")}>login</button>
-          <button className="hover:text-cyan-400"onClick={()=>navigate("/Cart")}>Cart</button>
-          <button className="hover:text-cyan-400">Profile</button>
+          <button onClick={() => navigate("/LoginSignup")} className="hover:text-blue-600">
+            Login
+          </button>
+          <button onClick={() => navigate("/Cart")} className="hover:text-blue-600">
+            Cart
+          </button>
+          <button className="hover:text-blue-600">
+            Profile
+          </button>
         </div>
 
       </div>
 
-
       {/* Title */}
-      <h2 className="text-3xl font-bold text-center mt-6 text-cyan-400">
+      <h2 className="text-3xl font-bold text-center mt-6 text-blue-600">
         Rajasthan Handicrafts
       </h2>
-
 
       {/* Product Grid */}
       <div className="grid md:grid-cols-3 gap-6 p-6">
@@ -99,7 +97,7 @@ const EcommerceHome = () => {
 
           <div
             key={product.id}
-            className="bg-slate-900/50 backdrop-blur-xl border border-cyan-400/20 rounded-xl overflow-hidden shadow-lg hover:scale-105 hover:border-cyan-400 transition"
+            className="bg-white border rounded-xl overflow-hidden shadow-sm hover:shadow-lg hover:scale-105 transition"
           >
 
             {/* Image */}
@@ -112,27 +110,27 @@ const EcommerceHome = () => {
             {/* Info */}
             <div className="p-4">
 
-              <h3 className="text-lg font-bold">
+              <h3 className="text-lg font-bold text-gray-900">
                 {product.name}
               </h3>
 
-              <p className="text-gray-400 text-sm">
+              <p className="text-gray-500 text-sm">
                 Vendor: {product.vendor}
               </p>
 
-              <p className="text-gray-400 text-sm">
+              <p className="text-gray-500 text-sm">
                 Location: {product.location}
               </p>
 
-              <p className="text-yellow-400 text-sm">
+              <p className="text-yellow-500 text-sm">
                 ⭐ {product.rating}
               </p>
 
-              <p className="text-cyan-400 font-bold mt-1">
+              <p className="text-blue-600 font-bold mt-1">
                 ₹{product.price}
               </p>
 
-              <button className="w-full mt-3 py-2 rounded-lg bg-gradient-to-r from-cyan-400 via-blue-400 to-emerald-400 text-black font-semibold hover:scale-105 transition">
+              <button className="w-full mt-3 py-2 rounded-lg bg-blue-500 text-white font-semibold hover:bg-blue-600 transition">
                 Add to Cart
               </button>
 
