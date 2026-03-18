@@ -39,7 +39,7 @@ app.post("/chat", async (req, res) => {
     res.json({ reply });
 
   } catch (error) {
-    console.log("❌ ERROR:", error.response?.data || error.message);
+    console.log(" ERROR:", error.response?.data || error.message);
 
     res.json({
       reply: "Server error, please try again later",
@@ -48,5 +48,5 @@ app.post("/chat", async (req, res) => {
 });
 
 app.listen(5000, () => {
-  console.log("✅ Server running on http://localhost:5000");
+  console.log(" Server running on http://localhost:5000");
 });

@@ -5,8 +5,14 @@ import LoginSignup from '../components/auth/Loginsignup'
 import Home from '../components/Home/Home'
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
 import Cart from '../components/Cart/Cart'
+import Chatbox from '../../extra/aii'
+import BottomNavbar from '../components/auth/bottom'
+import Cart1 from '../../extra/Cart1'
+import Admin1 from '../../extra/faltu'
+
 
 function App() {
+  const [chatOpen, setChatOpen] = useState(false);
   const [login, setlogin] = useState(false)
   const navigate=useNavigate();
   
@@ -16,7 +22,10 @@ function App() {
     
       {/* <LoginSignup/>
       <Admin/> */}
-      
+{/* <Cart1/> */}
+{/* <Admin1/>
+<Chatbox/>
+<BottomNavbar/> */}
     
     <Routes path="/" element={<App/>}>
     <Route path='' element={<Home />} />
