@@ -2,8 +2,8 @@ import { useState } from "react";
 import { FaHome, FaUser, FaComments } from "react-icons/fa";
 
 import EcommerceHome from "../Home/Home";
-import Chatbox from "../../../extra/aii";
-import Customer from "../../../extra/CustProfile";
+import Chatbox from "../../Ai/aii";
+import Customer from "../Profile/CustProfile";
 import LoginSignup from "./Loginsignup";
 
 export default function BottomNavbar({setlogin}) {

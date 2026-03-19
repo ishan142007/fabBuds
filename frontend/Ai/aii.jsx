@@ -4,8 +4,8 @@ export default function Chatbox() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-
   const sendMessage = async () => {
+    
     if (!input.trim()) return;
 
     const userMsg = { role: "user", content: input };
@@ -16,7 +16,7 @@ export default function Chatbox() {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:5000/chat", {
+      const res = await fetch("http://localhost:3000/chat", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
