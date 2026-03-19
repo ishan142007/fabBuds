@@ -1,7 +1,9 @@
-export const authrole=(roles)=>{
+export const authrole=(...roles)=>{
+
     return(req,res,next)=>{
-        if(!roles.includes(roles.user.role)){
-            return res.json(403).json({message:"access granted"})
+
+        if(!roles.includes(req.user.role)){
+            return res.status(403).json({message:"access not granted"})
         }    
         next();
     };

@@ -1,5 +1,37 @@
 import Product from "../models/product.model.js";
 
+export const createProduct = async (req, res) => {
+    try {
+        const {name, description, price, category, stock, imageUrl} = req.body;
+        if(!name || !description || !price || !category || !stock){
+            return res.status(400).json({
+                message: "All fields required",
+                success: false
+            })
+        }
+        const product = await Product.create({
+            name,
+            description,
+            price,
+            category,
+            stock,
+            imageUrl
+        });
+        return res.status(201).json({
+            message: "Product created successfully",
+            success: true,
+            product
+        })
+    } catch (error) {
+        return res.status(500).json({
+            message: "Server error",
+            success: false,
+            error: error
+        })
+    }
+}
+
+
 export const getAllProducts = async (req, res) => {//api hai get all product 
     try {
         const { search="",category="", minPrice, maxPrice, sort, page=1 } = req.query;
@@ -28,8 +60,12 @@ export const getAllProducts = async (req, res) => {//api hai get all product
     }
 }
 
+
+
+
 export const getProductById = async (req, res) => {
     try {
+        console.log(req.params.id);
         const product = await Product.findById(req.params.id);
         if (!product) {
             return res.status(404).json({
@@ -39,37 +75,6 @@ export const getProductById = async (req, res) => {
         }
         return res.status(200).json({
             message: "Product fetched successfully",
-            success: true,
-            product
-        })
-    } catch (error) {
-        return res.status(500).json({
-            message: "Server error",
-            success: false,
-            error: error
-        })
-    }
-}
-
-export const createProduct = async (req, res) => {
-    try {
-        const {name, description, price, category, stock, imageUrl} = req.body;
-        if(!name || !description || !price || !category || !stock){
-            return res.status(400).json({
-                message: "All fields required",
-                success: false
-            })
-        }
-        const product = await Product.create({
-            name,
-            description,
-            price,
-            category,
-            stock,
-            imageUrl
-        });
-        return res.status(201).json({
-            message: "Product created successfully",
             success: true,
             product
         })
