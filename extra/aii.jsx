@@ -41,21 +41,24 @@ export default function Chatbox() {
   };
 
   return (
-    
-    <div className="fixed bottom-16 right-5 w-80 bg-white shadow-lg rounded-lg">
+    <div className="fixed bottom-20 right-5 w-80 bg-white shadow-lg rounded-lg p-3 z-[9999]">
       
-    <div style={{ width: "400px", margin: "auto", fontFamily: "Arial" }}>
-      
-      
-      {/* Chat Box */}
+      {/* Header */}
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <h3>Chatbox</h3>
+        {/* <button onClick={() => setChatOpen(false)}>Close</button> */}
+      </div>
+
+      {/* Chat Messages */}
       <div
         style={{
-          height: "400px",
+          height: "300px",
           overflowY: "auto",
           border: "1px solid #ccc",
           padding: "10px",
           borderRadius: "10px",
           background: "#f9f9f9",
+          marginTop: "10px"
         }}
       >
         {messages.map((msg, i) => (
@@ -112,7 +115,6 @@ export default function Chatbox() {
           Send
         </button>
       </div>
-    </div>
     </div>
   );
 }

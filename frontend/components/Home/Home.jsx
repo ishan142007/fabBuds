@@ -1,8 +1,6 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 
 const EcommerceHome = () => {
-  const navigate = useNavigate();
 
   const products = [
     {
@@ -64,29 +62,8 @@ const EcommerceHome = () => {
   return (
     <div className="min-h-screen bg-gray-100 text-gray-800">
 
-      {/* Navbar */}
-      <div className="flex justify-between items-center p-4 bg-white shadow-sm border-b">
-
-        <h1 className="text-2xl font-bold text-blue-600">
-          FABBUDS
-        </h1>
-
-        <div className="space-x-6">
-          <button onClick={() => navigate("/LoginSignup")} className="hover:text-blue-600">
-            Login
-          </button>
-          <button onClick={() => navigate("/Cart")} className="hover:text-blue-600">
-            Cart
-          </button>
-          <button className="hover:text-blue-600">
-            Profile
-          </button>
-        </div>
-
-      </div>
-
       {/* Title */}
-      <h2 className="text-3xl font-bold text-center mt-6 text-blue-600">
+      <h2 className="text-3xl font-bold text-center pt-6 text-blue-600">
         Rajasthan Handicrafts
       </h2>
 

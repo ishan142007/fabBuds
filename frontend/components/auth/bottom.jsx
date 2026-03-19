@@ -1,33 +1,63 @@
-import { FaHome, FaShoppingCart, FaUser, FaRobot } from "react-icons/fa";
+import { useState } from "react";
+import { FaHome, FaUser, FaComments } from "react-icons/fa";
 
-export default function BottomNavbar() {
+import EcommerceHome from "../Home/Home";
+import Chatbox from "../../../extra/aii";
+import Customer from "../../../extra/CustProfile";
+import LoginSignup from "./Loginsignup";
+
+export default function BottomNavbar({setlogin}) {
+  const [Nav, setNav] = useState("");
+
   return (
-    <div className="fixed bottom-0 left-0 w-full bg-gray-900 text-white flex justify-around items-center py-3 shadow-lg">
+    <>
       
-      {/* Home */}
-      <div className="flex flex-col items-center cursor-pointer hover:text-blue-400">
-        <FaHome size={20} />
-        <span className="text-xs">Home</span>
+      <div className="p-6 pb-16 overflow-y-auto">
+        {Nav === "Home" && <EcommerceHome />}
+        {Nav === "Chatbot" && <Chatbox />}
+        {Nav === "Profile" && <Customer />}
+        {Nav==="Login" && <LoginSignup setlogin={setlogin}/>}
       </div>
 
-      {/* Cart */}
-      <div className="flex flex-col items-center cursor-pointer hover:text-blue-400">
-        <FaShoppingCart size={20} />
-        <span className="text-xs">Cart</span>
-      </div>
+     
+      <div className="fixed bottom-0 left-0 w-full bg-gray-900 text-white flex justify-around items-center shadow-lg z-50">
+        
+        <button 
+          onClick={() => setNav("Home")}
+          className="flex flex-col items-center hover:text-blue-400"
+        >
+          <FaHome size={20} />
+          <span className="text-xs">Home</span>
+        </button>
 
-      {/* Chatbot */}
-      <div className="flex flex-col items-center cursor-pointer hover:text-blue-400">
-        <FaRobot size={20} />
-        <span className="text-xs">Chat</span>
-      </div>
+       
+        <button 
+          onClick={() => setNav("Chatbot")}
+          className="flex flex-col items-center hover:text-blue-400"
+        >
+          <FaComments size={20} />
+          <span className="text-xs">Chat</span>
+        </button>
 
-      {/* Profile */}
-      <div className="flex flex-col items-center cursor-pointer hover:text-blue-400">
-        <FaUser size={20} />
-        <span className="text-xs">Profile</span>
-      </div>
+       
+        <button 
+          onClick={() => setNav("Profile")}
+          className="flex flex-col items-center hover:text-blue-400"
+        >
+          <FaUser size={20} />
+          <span className="text-xs">Profile</span>
+        </button>
+        <button 
+          onClick={() => setNav("Login")}
+          className="flex items-center gap-2 hover:text-blue-400"
+        >
+          <FaUser size={18} />
+          <span>Login</span>
+        </button>
 
-    </div>
+      
+
+      </div>
+    </>
   );
 }
