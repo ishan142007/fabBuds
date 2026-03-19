@@ -34,6 +34,7 @@ function LoginSignup({ setlogin }) {
           navigate("/");
         }
       } catch (error) {
+        console.log("hellow")
         console.log(error.response?.data || error.message);
       }
     } else {

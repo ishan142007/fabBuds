@@ -4,13 +4,13 @@ import Product from "./product.model.js";
 const cartSchema = new mongoose.Schema({
     UserId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref:"User",
+        ref: User,
         required: true,
         unique: true
     },
     item: [
         {
-            ProductId: {
+            productId: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: Product,
                 required: true
@@ -19,11 +19,17 @@ const cartSchema = new mongoose.Schema({
                 type: Number,
                 required: true,
                 min: 1
+            },
+            price:{
+                type:Number,
+                required:true,
+                min:1
             }
         }
     ],
     totalprice:{
-        // default:0,
+        // type:number
+        // default:'0',
 
 
     }
@@ -31,7 +37,7 @@ const cartSchema = new mongoose.Schema({
 },{timestamps:true});
 cartSchema.pre("save",function(next){
 this.totalprice =this .item.reduce((acc,curr)=>{
-    return acc + (curr.quantity * curr.ProductId.price);
+    return acc + (curr.quantity * curr.productId.price);
     next();
 },0)
 
