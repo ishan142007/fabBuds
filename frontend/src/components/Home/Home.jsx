@@ -62,12 +62,12 @@ const EcommerceHome = () => {
   return (
     <div className="min-h-screen bg-gray-100 text-gray-800">
 
-      {/* Title */}
+      
       <h2 className="text-3xl font-bold text-center pt-6 text-blue-600">
         Welcome To FabBuds
       </h2>
 
-      {/* Product Grid */}
+      
       <div className="grid md:grid-cols-3 gap-6 p-6">
 
         {products.map((product) => (
@@ -77,14 +77,14 @@ const EcommerceHome = () => {
             className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg hover:scale-102 transition"
           >
 
-            {/* Image */}
+          
             <img
               src={product.image}
               alt={product.name}
               className=" w-full h-48 object-cover"
             />
  
-            {/* Info */}
+            
             <div className="p-4">
 
               <h3 className="text-lg font-bold text-gray-900">

@@ -2,11 +2,11 @@ import React from "react";
 
 function Customer(){
   const customer = {
-    name: "John Doe",
+    name: "Ishan Singh Patel",
     id: "#12345",
-    email: "john@example.com",
-    phone: "+91 9876543210",
-    address: "Jaipur, Rajasthan",
+    email: "ishan4578@gmail.com",
+    phone: "+91 9785461636",
+    address: ",Alwar Rajasthan",
     joined: "12 Jan 2024",
     orders: 25,
     spent: "₹15,000",
@@ -19,7 +19,7 @@ function Customer(){
           <img
             src={customer.image}
             alt="Profile"
-            className="w-10 h-20 rounded-full border-4 "
+            className=" h-20 rounded-full border-4 "
           />
       <div className="bg-white shadow-xl rounded-2xl w-full max-w-4xl p-6">
 
