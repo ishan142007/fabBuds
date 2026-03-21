@@ -13,7 +13,7 @@ const Footer = () => {
     <footer className=" bg-white border-t border-gray-200 mt-10">
       <div className="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
         
-        {/* Brand */}
+        
         <div>
           <h2 className="text-xl font-bold text-black">FabBuds</h2>
           <p className="text-gray-600 mt-2 text-sm">
@@ -21,7 +21,6 @@ const Footer = () => {
           </p>
         </div>
 
-        {/* Quick Links */}
         <div>
           <h3 className="font-semibold text-gray-900 mb-3">Quick Links</h3>
           <ul className="space-y-2 text-sm text-gray-600">
@@ -32,7 +31,6 @@ const Footer = () => {
           </ul>
         </div>
 
-        {/* Customer Service */}
         <div>
           <h3 className="font-semibold text-gray-900 mb-3">Customer Service</h3>
           <ul className="space-y-2 text-sm text-gray-600">
@@ -43,7 +41,6 @@ const Footer = () => {
           </ul>
         </div>
 
-        {/* Social Media */}
         <div>
           <h3 className="font-semibold text-gray-900 mb-3">Follow Us</h3>
           <p className="text-sm text-gray-600 mb-3">
@@ -74,7 +71,6 @@ const Footer = () => {
 
       </div>
 
-      {/* Bottom */}
       <div className="text-center border-t border-gray-100 py-4 text-sm text-gray-500">
         © 2026 FabBuds. All rights reserved.
       </div>

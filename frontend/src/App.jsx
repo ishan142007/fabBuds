@@ -32,7 +32,7 @@ function App() {
     
     <Route path='Admin' element={(1)?<Admin/>:<Navigate to='/' replace/>}/>
     <Route path='Cart' element={(1)?<Cart/>:<Navigate to='/' replace />}/>
-    
+
     {/* <Route path='Admin' element={<Admin/>}/> */}
     
       
