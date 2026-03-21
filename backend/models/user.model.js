@@ -35,7 +35,7 @@ const userSchema = mongoose.Schema({
     },
     role:{
         type:String,
-        enum: ["user","admin"],
+        enum: ["user","admin","seller"],
         default: "user"
     },
     address:[addressSchema]
@@ -45,13 +45,13 @@ const userSchema = mongoose.Schema({
 userSchema.pre("save",async function(next){
     try {
         if(!this.isModified('password')){
-            return next();
+            return next;
         }
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(this.password,salt);
         console.log(hashedPassword);
         this.password = hashedPassword;
-        next();
+        next;
     } catch (error) {
         console.log("password error",error)
     }

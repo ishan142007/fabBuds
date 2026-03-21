@@ -5,7 +5,11 @@ import LoginSignup from '../components/auth/Loginsignup'
 import Home from '../components/Home/Home'
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
 import Cart from '../components/Cart/Cart'
+
 import Ai from '../components/Aichatbot/Ai'
+
+
+
 function App() {
   const [login, setlogin] = useState(false)
   const navigate = useNavigate();
