@@ -1,39 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 
-function Cart1({ cart, setCart }) {
+function Cart(product) {
 
-  const products = [
-    {
-      id: 1,
-      name: "Blue Pottery Vase",
-      price: 799, },
-    {
-      id: 2,
-      name: "Rajasthani Kathputli",
-      price: 499, },
-    {
-      id: 3,
-      name: "Miniature Painting",
-      price: 1499,
-},
-{
-      id: 4,
-      name: "Block Print Bedsheet",
-      price: 999,
-},
-    {
-      id: 5,
-      name: "Handmade Mojari Chappal",
-      price: 699,
-},
+const [cart,setCart]=useState({
 
-  ];
-
+  productId:"",
+  price:"",
+  quantity:""
+  
+}
+)
   const addToCart = (product) => {
-
-    setCart([...cart, product]);
+    const existing=cart.find(item=>item.id===product.id);
+    if(existing){
+      increasequantity(product.id)
+    }
+    else{
+      
+      setCart([...cart, {product,quantity:1}]);
+    }
 
   };
+  const increasequantity=(id)=>{
+    const increase=cart.map(item=>item.id===id?{...item,quantity:item.quantity+1}:item)
+    setCart(increase)
+  };
+  const decreasequantity=(id)=>{
+    const decrease=cart.map(item=>item.id===id?{...item,quantity:item.quantity-1}:item)
+    setCart(decrease)
+  }
+  
 
   return (
 
@@ -47,18 +43,21 @@ function Cart1({ cart, setCart }) {
 
           <h3>{product.name}</h3>
 
-          <button onClick={() => addToCart(product)}>
-            Add to Cart
-          </button>
+         
+          <button onClick={()=>decreasequantity}>-</button>
+            {product.quantity}
+          <button onClick={()=>increasequantity}>+</button>
 
         </div>
 
       ))}
+   
+      
 
+    
     </div>
-
   );
 
 }
 
-export default  Cart1;
+export default  Cart;

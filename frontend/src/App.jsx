@@ -13,6 +13,7 @@ import Admin1 from './components/Admin/Admin'
 
 
 
+
 function App() {
   
   const [login, setlogin] = useState(false)
@@ -29,6 +30,7 @@ function App() {
     <Route path='LoginSignup' element={<LoginSignup setlogin={setlogin}/>}   />
 
     <Route path='profile' element={<Customer/>}/>
+    <Route path='cart' element={<Cart/>}/>
     
     <Route path='Admin' element={(1)?<Admin/>:<Navigate to='/' replace/>}/>
     <Route path='Cart' element={(1)?<Cart/>:<Navigate to='/' replace />}/>
@@ -37,8 +39,9 @@ function App() {
     
       
     </Routes>
+    <Product/>
     
-    
+    <Productform/>
       <Footer/>
       <BottomNavbar/>
     </>
