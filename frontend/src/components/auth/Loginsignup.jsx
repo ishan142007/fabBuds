@@ -21,6 +21,7 @@ function LoginSignup({ setlogin }) {
     const { fullname, email, password, photo } = user;
 
     if (activeTab === "signup") {
+      //signup ke liye
       try {
         const res = await axios.post(
           "http://localhost:3000/api/auth/signup",
@@ -38,14 +39,15 @@ function LoginSignup({ setlogin }) {
         console.log(error.response?.data || error.message);
       }
     } else {
+      //login ke liye
       try {
         const res = await axios.post(
           "http://localhost:3000/api/auth/login",
-          { email, password }
+          { email, password,role }
         );
 
-        if (res.data.token) {
-          localStorage.setItem("token", res.data.token);
+        if (res.data.data.token) {
+          localStorage.setItem("token", res.data.data.token);
           setlogin(true);
           setIsLoggedIn(true);
           navigate("/");
@@ -144,7 +146,7 @@ function LoginSignup({ setlogin }) {
                 className="w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-400"
               >
                 <option value="">Choose Role</option>
-                <option value="User">User</option>
+                <option value="user">User</option>
                 <option value="seller">Seller</option>
                 <option value="admin">Admin</option>
               </select>
