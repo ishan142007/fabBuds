@@ -10,6 +10,7 @@ import TopNavbar from './components/auth/Top'
 import Footer from './components/auth/footer'
 import Customer from './components/Profile/CustProfile'
 import Admin1 from './components/Admin/Admin'
+import Productform from './components/Cart/productform'
 
 
 
@@ -39,7 +40,7 @@ function App() {
     
       
     </Routes>
-    <Product/>
+    {/* <Products/> */}
     
     <Productform/>
       <Footer/>
