@@ -28,8 +28,9 @@ function LoginSignup({ setlogin }) {
           { fullname, email, password, photo, role }
         );
 
-        if (res.data.token) {
-          localStorage.setItem("token", res.data.token);
+        // console.log("hi",res.data.user.token)
+        if (res.data.user.token) {
+          localStorage.setItem("token", res.data.user.token);
           setlogin(true);
           setIsLoggedIn(true);
           navigate("/");
@@ -45,9 +46,9 @@ function LoginSignup({ setlogin }) {
           "http://localhost:3000/api/auth/login",
           { email, password,role }
         );
-
-        if (res.data.data.token) {
-          localStorage.setItem("token", res.data.data.token);
+        // console.log(res.data.user.token)
+        if (res.data.user.token) {
+          localStorage.setItem("token", res.data.user.token);
           setlogin(true);
           setIsLoggedIn(true);
           navigate("/");

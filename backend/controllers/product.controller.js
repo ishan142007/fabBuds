@@ -9,13 +9,15 @@ export const createProduct = async (req, res) => {
                 success: false
             })
         }
+        const user=req.user.id;
         const product = await Product.create({
             name,
             description,
             price,
             category,
             stock,
-            imageUrl
+            imageUrl,
+            userId:user
         });
         return res.status(201).json({
             message: "Product created successfully",
@@ -23,6 +25,7 @@ export const createProduct = async (req, res) => {
             product
         })
     } catch (error) {
+        console.log(error)
         return res.status(500).json({
             message: "Server error",
             success: false,
@@ -60,12 +63,29 @@ export const getAllProducts = async (req, res) => {//api hai get all product
     }
 }
 
+export const getProductByUserId=async(req,res)=>{
+    const user=req.user.id;
+    try {
+        const products=await Product.find({userId:user})
+        return res.status(200).json({
+            message:"products fetched for the user ",
+            success:true,
+            products
+        })
+    } catch (error) {
+        return res.status(500).json({
+            message:"data not fetched for the user",
+            success:"false",
+            error:error
 
+        })
+    }
+}
 
 
 export const getProductById = async (req, res) => {
     try {
-        console.log(req.params.id);
+        // console.log(req.params.id);
         const product = await Product.findById(req.params.id);
         if (!product) {
             return res.status(404).json({

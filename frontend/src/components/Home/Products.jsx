@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-export default function Product(){
+export default function Products(){
     const [ptype,setptype]=useState("");
     const [pname,setpname]=useState("");
     const [pprice,setpprice]=useState("");
@@ -10,7 +10,7 @@ export default function Product(){
         <>
 
         <div className=" ">
-    <div className=" flex justify-center items-center grid text-center m-2">
+    <div className="  justify-center items-center grid text-center m-2">
 
        Product Type 
        <input type="text" onChange={(e)=>setptype(e.target.value)} className="border"/>
