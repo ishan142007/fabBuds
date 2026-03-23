@@ -4,6 +4,7 @@ import { useState,useEffect } from "react";
 
 const EcommerceHome = () => {
   const [products, setProducts] = useState([])
+  const token=localStorage.getItem("token");
 
   // const products = [
   //   {
@@ -72,10 +73,26 @@ const EcommerceHome = () => {
     };
 
     useEffect(() => {
-        fetchProducts();
+        fetchProducts();  
     }, []);
-    const handlecart=async()=>{
-      
+    const handlecart=async(product)=>{
+      const id=product._id;
+      console.log(id)
+      try {
+        const res=await axios.post(
+          "http://localhost:3000/api/cart/add",
+          {productId:id,quantity:1},
+          {
+          headers:{
+              Authorization:`Bearer ${token}`
+          }
+        }
+      )
+      console.log(res)
+        
+      } catch (error) {
+        console.log(error)
+      }
     }
   return (
     <div className="min-h-screen bg-gray-100 text-gray-800">
@@ -126,7 +143,7 @@ const EcommerceHome = () => {
               </p>
 
               <button className="w-full mt-3 py-2 rounded-lg bg-blue-500 text-white font-semibold hover:bg-blue-600 transition"
-              onClick={()=>handlecart()}
+              onClick={()=>handlecart(product)}
               >
                 Add to Cart
               </button>

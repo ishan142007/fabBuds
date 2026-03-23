@@ -1,10 +1,10 @@
 import express from "express";
-import { getCart,addToCart,removeFromCart,clearCart } from "../controllers/Cart.controller.js";
+import { getCart,addToCart,updateCart,removeFromCart,clearCart } from "../controllers/Cart.controller.js";
 import { verifyToken}  from "../Middleware/verifyToken.middle.js";
 const router=express.Router();
 router.get("/",verifyToken,getCart);
 router.post ("/add",verifyToken,addToCart);
-// router.put("/update",verifyToken,updateCart);
+router.put("/update",verifyToken,updateCart);
 router.delete("/remove/:itemId",verifyToken,removeFromCart);
 router.delete("/clear",verifyToken,clearCart);
 export default router;
