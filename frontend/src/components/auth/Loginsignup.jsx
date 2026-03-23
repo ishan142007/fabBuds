@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function LoginSignup({ setlogin }) {
@@ -174,41 +174,7 @@ function LoginSignup({ setlogin }) {
 
           </div>
         </div>
-      ) : (
-
-        // Profile Page
-        <div className="flex items-center justify-center py-20 px-4">
-
-          <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8 text-center">
-
-            <h2 className="text-2xl font-bold text-blue-600 mb-6">
-              Customer Profile
-            </h2>
-
-            <img
-              src={user.photo || "https://via.placeholder.com/150"}
-              alt="Profile"
-              className="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-blue-400 object-cover"
-            />
-
-            <h3 className="text-xl font-semibold">
-              {user.fullname || "User"}
-            </h3>
-
-            <p className="text-gray-500 mt-2">
-              {user.email}
-            </p>
-
-            <button
-              onClick={handleLogout}
-              className="mt-6 px-6 py-2 rounded-full bg-red-500 text-white font-semibold hover:bg-red-600 transition"
-            >
-              Logout
-            </button>
-
-          </div>
-        </div>
-      )}
+      ) : <Navigate to="/"/>}
 
     </div>
   );

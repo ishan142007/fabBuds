@@ -102,7 +102,7 @@ export const login = async (req, res) => {
         }
 
         const findUser = await User.findOne({email});
-        console.log(findUser)
+        // console.log(findUser)
         if(!findUser){
             return res.status(404).json({
                 message: "User not found",
@@ -111,7 +111,7 @@ export const login = async (req, res) => {
         }
         const isMatchedPassword = await bcrypt.compare(password,findUser.password);
         // console.log('isMatchedPassword', isMatchedPassword)
-        if(!isMatchedPassword){
+        if(!isMatchedPassword || findUser.role !==role){
             return res.status(400).json({
                 message: "Wrong credentials",
                 success: false
@@ -155,8 +155,8 @@ export const logout = async (req, res) => {
 export const adminfetch=async(req,res)=>{
     try {
         const response= await User.find();
-        res.status(200).json({message:"datafetched",response:response})
-    } catch (error) {
+        res.status(200).json({message:"datafetched",data:response})
+    } catch (error) { 
         res.status(400).json({message:"error occured",error:error})
     }
     
@@ -164,9 +164,29 @@ export const adminfetch=async(req,res)=>{
 export const admindel=async(req,res)=>{
     try {
         const {email}=req.body
-        const response=await User.delete({email})
+        await User.delete({email})
         res.status(200).json({message:"user deleted successfully"})
     } catch (error) {
         res.status(500).json({message:"error occured",error:error})
+    }
+}
+
+export const profile=async(req,res)=>{
+    const userId=req.user.id;
+    console.log(userId)
+    try {
+        const ans=await User.findById(userId)
+        console.log(ans)
+        return res.status(200).json({
+            message:"profile loaded",
+            success:true,
+            ans
+        })
+    } catch (error) {
+        return res.status(500).json({
+            message:"error occured ",
+            success:false,
+            error:error
+        })
     }
 }
