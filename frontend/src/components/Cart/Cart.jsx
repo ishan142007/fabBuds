@@ -1,23 +1,33 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 export default function CartPage() {
-  const [cart, setCart] = useState(null);
+  const [cart, setCart] = useState({
+    name:"",
+    productId:"",
+    quantity:0,
+    price:0,
+  });
+  const [Name, setName] = useState("")
   const [productId, setProductId] = useState("");
   const [qty, setQty] = useState(1);
-
-  const API = " http://localhost:3000/api/products/";
+const token=localStorage.getItem("token")
+  const API = " http://localhost:3000/api/cart";
   const getCart = async () => {
     try {
-      const res = await axios.get(API + "/get", {
+      const res = await axios.get(API , {
         headers: {
-          Authorization: localStorage.getItem("token")
+          Authorization:`Bearer ${token}`
         }
       });
+      
+      console.log(res.data.cart);
       setCart(res.data.cart);
+      
     } catch (err) {
       console.log("error in getCart", err);
     }
   };
+  
   const addItem = async () => {
     if (!productId) return alert("enter product id");
 
@@ -27,7 +37,7 @@ export default function CartPage() {
         quantity: Number(qty)
       }, {
         headers: {
-          Authorization: localStorage.getItem("token")
+          Authorization:`Bearer ${token}`
         }
       });
 
@@ -46,7 +56,7 @@ export default function CartPage() {
         itemId: id
       }, {
         headers: {
-          Authorization: localStorage.getItem("token")
+          Authorization:`Bearer ${token}`
         }
       });
 
@@ -59,9 +69,9 @@ export default function CartPage() {
   
   const clearAll = async () => {
     try {
-      await axios.post(API + "/clear", {}, {
-        headers: {
-          Authorization: localStorage.getItem("token")
+      await axios.delete(API + "/clear", {
+        headers:{
+          Authorization:`Bearer ${token}`
         }
       });
       getCart();
@@ -105,9 +115,11 @@ export default function CartPage() {
         {cart?.item?.length === 0 && <p>no item</p>}
 
         {cart?.item?.map((i) => (
+          
           <div key={i._id} className="border p-2 mb-2 flex justify-between">
+            {/* {()=>{handleproduct()}} */}
             <div>
-              <p>id: {i.productId}</p>
+              <p> {i.name}</p>
               <p>qty: {i.quantity}</p>
               <p>₹ {i.price}</p>
             </div>
