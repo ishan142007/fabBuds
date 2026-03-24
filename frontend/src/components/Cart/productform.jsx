@@ -28,7 +28,7 @@ export default function Productform() {
           },
         },
       );
-    //   console.log(res.data.user.id);
+      // console.log(res.data.user.id);
       const ans =await axios.get(`http://localhost:3000/api/products/user`,{
         headers:{
             authorization:`Bearer ${token}`
