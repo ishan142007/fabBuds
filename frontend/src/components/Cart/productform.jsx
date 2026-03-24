@@ -19,6 +19,7 @@ export default function Productform() {
   const fetchProductsByid = async () => {
     try {
 
+      
       // console.log(res.data.user.id);
       const ans =await axios.get(`http://localhost:3000/api/products/user`,{
         headers:{

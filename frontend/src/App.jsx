@@ -21,8 +21,8 @@ import Rout from './Rout'
 function App() {
   
   const [login, setlogin] = useState(false)
-  const navigate=useNavigate();
-  
+  const navigate = useNavigate();
+
 
   return (
     <>

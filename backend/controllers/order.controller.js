@@ -37,45 +37,46 @@ export const createOrder = async (req, res) => {
     }
 }
 export const getOrder = async (req, res) => {
-    try{
-        const orderId=req.params.id;
-        const order=await Order.findById(orderId);
-        if (!order){
-            return res.status(404).json({message:"Order not found",success:false});
-        }   
-        if (order.UserId.toString() !== req.user.id){
-            return res.status(403).json({message:"Unauthorized access",success:false});
+    try {
+        const orderId = req.params.id;
+        const order = await Order.findById(orderId);
+        if (!order) {
+            return res.status(404).json({ message: "Order not found", success: false });
         }
-        return res.status(200).json({message:"Order fetched successfully",success:true,order});
-        
-        
-    }catch (error){
-        return res.status(500).json({message:"server error",
-            success:false,
-            error:error
-            
-            
+        if (order.UserId.toString() !== req.user.id) {
+            return res.status(403).json({ message: "Unauthorized access", success: false });
+        }
+        return res.status(200).json({ message: "Order fetched successfully", success: true, order });
+
+
+    } catch (error) {
+        return res.status(500).json({
+            message: "server error",
+            success: false,
+            error: error
+
+
         })
     }
     
     
 }
-export const getOrders=async (req,res)=>{
-    try{
-        const orders=await Order.find({userId:req.user.id}).sort({createdAt:-1});
+export const getOrders = async (req, res) => {
+    try {
+        const orders = await Order.find({ userId: req.user.id }).sort({ createdAt: -1 });
         return res.status(200).json({
-            message:"Order fetched sucessfully",
-            success:true,
+            message: "Order fetched sucessfully",
+            success: true,
             orders
         })
-        
-    }catch (error){
+
+    } catch (error) {
         return res.status(500).json({
-            message:"server error",
-            error:error,
-            success:false
-            
-            
+            message: "server error",
+            error: error,
+            success: false
+
+
         })
         
     }
