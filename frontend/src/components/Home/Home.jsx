@@ -1,10 +1,15 @@
 import axios from "axios";
 import React from "react";
 import { useState,useEffect } from "react";
+import Sidebar from "../auth/Sidebar";
 
 const EcommerceHome = () => {
   const [products, setProducts] = useState([])
+<<<<<<< Updated upstream
   const token=localStorage.getItem("token");
+=======
+  const[cart,setCart]=useState([]);
+>>>>>>> Stashed changes
 
   // const products = [
   //   {
@@ -75,6 +80,7 @@ const EcommerceHome = () => {
     useEffect(() => {
         fetchProducts();  
     }, []);
+<<<<<<< Updated upstream
     const handlecart=async(product)=>{
       const id=product._id;
       console.log(id)
@@ -94,7 +100,21 @@ const EcommerceHome = () => {
         console.log(error)
       }
     }
+=======
+    const handlecart=async()=>{
+      try {
+        const res=await axios.post("http://localhost:3000/api/products/add");
+        setCart(res.data.data);
+
+        
+      } catch (error) {
+        console.log("error");
+      }
+      
+    };
+>>>>>>> Stashed changes
   return (
+    <>
     <div className="min-h-screen bg-gray-100 text-gray-800">
 
       
@@ -103,7 +123,7 @@ const EcommerceHome = () => {
       </h2>
 
       
-      <div className="grid md:grid-cols-3 gap-6 p-6">
+      <div className="grid md:grid-cols-4 gap-6 p-6">
 
         {products.map((product) => (
 
@@ -157,6 +177,7 @@ const EcommerceHome = () => {
       </div>
 
     </div>
+                </>
   );
 };
 

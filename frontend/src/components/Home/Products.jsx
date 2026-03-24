@@ -1,28 +1,31 @@
 import { useState } from "react"
 
-export default function Products(){
-    const [ptype,setptype]=useState("");
-    const [pname,setpname]=useState("");
-    const [pprice,setpprice]=useState("");
-    const [pdesc,setpdesc]=useState("");
+export default function Products({products}){
+ 
 
     return(
-        <>
-
-        <div className=" ">
-    <div className="  justify-center items-center grid text-center m-2">
-
-       Product Type 
-       <input type="text" onChange={(e)=>setptype(e.target.value)} className="border"/>
-       Product Name
-       <input type="text" onChange={(e)=>setpname(e.target.value)} className="border"/>
-       Product Price
-       <input type="text" onChange={(e)=>setpprice(e.target.value)}className="border"/>
-       Product Descrition 
-       <input type="text" onChange={(e)=>setpdesc(e.target.value)}className="border"/>
-    </div>
-       
-        </div>
+        <> <div className="grid grid-cols-3 gap-4">
+        {products &&
+          products.map((p) => (
+            <div key={p._id} className="border p-3 rounded">
+              <img
+                src={p.imageUrl}
+                alt=""
+                className="h-40 w-full object-cover"
+              />
+              <h2 className="font-bold">{p.name}</h2>
+              <p>{p.description}</p>
+              <p>₹ {p.price}</p>
+              <p>Stock: {p.stock}</p>
+              <button
+                onClick={() => deleteProduct(p._id)}
+                className="bg-red-500 text-white p-1 mt-2"
+              >
+                Delete
+              </button>
+            </div>
+          ))}
+      </div>
         </>
     )
 }
