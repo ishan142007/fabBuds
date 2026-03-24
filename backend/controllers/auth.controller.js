@@ -5,7 +5,7 @@ import bcrypt from "bcrypt";
 const generateToken = (userId,role) => {
     const token = jwt.sign(
         { id: userId,
-            role:user.role
+            role:role
          },
         process.env.JWT_SECRET_TOKEN,
         { expiresIn: "10d" }
@@ -17,7 +17,7 @@ const generateToken = (userId,role) => {
 export const signup = async (req, res) => {
     try {
         
-        const { fullname, email, password } = req.body;
+        const { fullname, email, password,role } = req.body;
         if (!fullname || !email || !password) {
             return res.status(400).json({
                 message: "All fields required",
@@ -56,10 +56,11 @@ export const signup = async (req, res) => {
         const newUser = await User.create({
             fullname,
             email,
-            password
+            password,
+            role
         })
 
-        const token = generateToken(newUser._id);
+        const token = generateToken(newUser._id,newUser.role);
 
         return res.status(200).json({
             message: "User successfull registered",
@@ -83,7 +84,7 @@ export const signup = async (req, res) => {
 
 export const login = async (req, res) => {
     try {
-        const { email, password } = req.body;
+        const { email, password,role } = req.body;
         
         
         if (!email || !password) {
@@ -109,7 +110,7 @@ export const login = async (req, res) => {
             })
         }
         const isMatchedPassword = await bcrypt.compare(password,findUser.password);
-        console.log('isMatchedPassword', isMatchedPassword)
+        // console.log('isMatchedPassword', isMatchedPassword)
         if(!isMatchedPassword){
             return res.status(400).json({
                 message: "Wrong credentials",
@@ -117,7 +118,7 @@ export const login = async (req, res) => {
             })
         }
 
-        const token = generateToken(findUser._id,role);
+        const token = generateToken(findUser._id,findUser.role);
 
         return res.status(200).json({
             message: "Login successfully",
@@ -148,4 +149,22 @@ export const logout = async (req, res) => {
         message: "Logout successful",
         success: true
     })
+}
+export const adminfetch=async(req,res)=>{
+    try {
+        const response= await User.find();
+        res.status(200).json({message:"datafetched",response:response})
+    } catch (error) {
+        res.status(400).json({message:"error occured",error:error})
+    }
+    
+}
+export const admindel=async(req,res)=>{
+    try {
+        const {email}=req.body
+        const response=await User.delete({email})
+        res.status(200).json({message:"user deleted successfully"})
+    } catch (error) {
+        res.status(500).json({message:"error occured",error:error})
+    }
 }

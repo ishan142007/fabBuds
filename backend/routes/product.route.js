@@ -3,10 +3,10 @@ import { getAllProducts, getProductById, createProduct, updateProduct, deletePro
 
 const router = express.Router();
 
-router.get("/", getAllProducts);
-router.get("/:id", getProductById);//perams waliii
 router.post("/create", createProduct);
+router.get("/", getAllProducts);
 router.put("/update/:id", updateProduct);
 router.delete("/delete/:id", deleteProduct);
+router.get("/:id", getProductById); 
 
 export default router;
