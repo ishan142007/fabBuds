@@ -22,7 +22,7 @@ const token=localStorage.getItem("token")
         }
       });
       
-      console.log(res.data.cart);
+      // console.log(res.data.cart);
       setCart(res.data.cart);
       
     } catch (err) {
@@ -161,6 +161,7 @@ const token=localStorage.getItem("token")
           
         )}
       </div>
+      
    </div>
    
    
