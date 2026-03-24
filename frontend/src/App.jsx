@@ -10,6 +10,11 @@ import TopNavbar from './components/auth/Top'
 import Footer from './components/auth/footer'
 import Customer from './components/Profile/CustProfile'
 import Admin1 from './components/Admin/Admin'
+import Productform from './components/Cart/productform'
+import CartPage from './components/Cart/Cart'
+import Sidebar from './components/auth/Sidebar'
+import Rout from './Rout'
+
 
 
 
@@ -23,24 +28,9 @@ function App() {
     <>
     {/* <TopNavbar/> */}
       
+ 
+   <Rout/>
    
-    <Routes path="/" >
-    <Route path='' element={<Home />} />
-    <Route path='LoginSignup' element={<LoginSignup setlogin={setlogin}/>}   />
-
-    <Route path='profile' element={<Customer/>}/>
-    
-    <Route path='Admin' element={(1)?<Admin/>:<Navigate to='/' replace/>}/>
-    <Route path='Cart' element={(1)?<Cart/>:<Navigate to='/' replace />}/>
-
-    {/* <Route path='Admin' element={<Admin/>}/> */}
-    
-      
-    </Routes>
-    
-    
-      <Footer/>
-      <BottomNavbar/>
     </>
     
   )

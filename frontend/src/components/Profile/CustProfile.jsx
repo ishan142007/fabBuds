@@ -1,23 +1,59 @@
 import React from "react";
+import { useEffect } from "react";
+import axios from "axios";
+import { useState } from "react";
 
-function Customer(){
-  const customer = {
-    name: "Ishan Singh Patel",
-    id: "#12345",
-    email: "ishan4578@gmail.com",
-    phone: "+91 9785461636",
-    address: ",Alwar Rajasthan",
-    joined: "12 Jan 2024",
-    orders: 25,
-    spent: "₹15,000",
-    status: "Active",
-    image: "https://media.istockphoto.com/id/814423752/photo/eye-of-model-with-colorful-art-make-up-close-up.jpg?s=612x612&w=0&k=20&c=l15OdMWjgCKycMMShP8UK94ELVlEGvt7GmB_esHWPYE=",
-  };
+function profile(){
+  const token=localStorage.getItem("token")
+
+  
+  // let profile = {
+  //   fullname: "Ishan Singh Patel",
+  //   _id: "#12345",
+  //   email: "ishan4578@gmail.com",
+  //   phone: "+91 9785461636",
+  //   address: ",Alwar Rajasthan",
+  //   joined: "12 Jan 2024",
+  //   orders: 25,
+  //   spent: "₹15,000",
+  //   status: "Active",
+  //   image: "https://media.istockphoto.com/id/814423752/photo/eye-of-model-with-colorful-art-make-up-close-up.jpg?s=612x612&w=0&k=20&c=l15OdMWjgCKycMMShP8UK94ELVlEGvt7GmB_esHWPYE=",
+  // };
+  const [profile, setProfile] = useState({
+    fullname:"",
+    id:"",
+    email:"",
+    role:"",
+    address:"",
+    joined:"",
+  })
+  useEffect(() => {
+    const handleProfile=async()=>{
+      try {
+        const user=await axios.get("http://localhost:3000/api/auth/profile",{
+          headers:{
+            Authorization:`Bearer ${token}`
+          }
+        })
+        // console.log(user.data.ans);
+        const identity=user.data.ans
+        setProfile({...identity,joined:identity.createdAt})
+        
+        
+      } catch (error) {
+        console.log(error)
+      }
+      }
+    handleProfile()
+  
+    
+  }, [])
+  
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6">  <div className=" items-center gap-6 border-b pb-6">
           <img
-            src={customer.image}
+            src={profile.image}
             alt="Profile"
             className=" h-20 rounded-full border-4 "
           />
@@ -28,21 +64,21 @@ function Customer(){
 
           <div>
             <h2 className="text-2xl font-bold text-gray-800">
-              {customer.name}
+              {profile.fullname}
             </h2>
             <p className="text-gray-500">
-              Customer ID: {customer.id}
+              profile ID: {profile._id}
             </p>
 
-            <span
+            {/* <span
               className={`inline-block mt-2 px-3 py-1 text-sm rounded-full ${
-                customer.status === "Active"
+                profile.status === "Active"
                   ? "bg-green-100 text-green-600"
                   : "bg-red-100 text-red-600"
               }`}
             >
-              {customer.status}
-            </span>
+              {profile.status}
+            </span> */}
           </div>
         </div>
 
@@ -54,21 +90,21 @@ function Customer(){
             <div>
               <p className="text-gray-500 text-sm">Email</p>
               <p className="text-gray-800 font-medium">
-                {customer.email}
+                {profile.email}
               </p>
             </div>
 
-            <div>
+            {/* <div>
               <p className="text-gray-500 text-sm">Phone</p>
               <p className="text-gray-800 font-medium">
-                {customer.phone}
+                {profile.phone}
               </p>
-            </div>
+            </div> */}
 
             <div>
               <p className="text-gray-500 text-sm">Address</p>
               <p className="text-gray-800 font-medium">
-                {customer.address}
+                {profile.address}
               </p>
             </div>
           </div>
@@ -78,23 +114,23 @@ function Customer(){
             <div>
               <p className="text-gray-500 text-sm">Joined Date</p>
               <p className="text-gray-800 font-medium">
-                {customer.joined}
+                {profile.joined}
               </p>
             </div>
 
-            <div>
+            {/* <div>
               <p className="text-gray-500 text-sm">Orders</p>
               <p className="text-gray-800 font-medium">
-                {customer.orders} Orders
+                {profile.orders} Orders
               </p>
-            </div>
+            </div> */}
 
-            <div>
+            {/* <div>
               <p className="text-gray-500 text-sm">Total Spent</p>
               <p className="text-gray-800 font-medium">
-                {customer.spent}
+                {profile.spent}
               </p>
-            </div>
+            </div> */}
           </div>
 
         </div>
@@ -114,4 +150,4 @@ function Customer(){
   );
 };
 
-export default Customer;
+export default profile;
