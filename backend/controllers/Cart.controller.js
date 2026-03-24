@@ -194,4 +194,24 @@ export const clearCart=async(req,res)=>{
         })
     }
 }
+export const totalprice=async(req,res)=>{
+    let cart=await Cart.findOne({UserId:req.user.id});
+    if(!cart){
+        return res.status(404).json({
+            message:"no cart found",
+            success:false
+        })
+    }
+        const items= cart.item;
+        // console.log(items)
+        let totalcost=0;
+        for(let i of items){
+           totalcost +=i.price*i.quantity;
 
+        }
+        return res.status(200).json({
+            message:"totalprice calculated",
+            success:true,
+            totalprice:totalcost
+        })
+}
