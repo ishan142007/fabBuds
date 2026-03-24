@@ -121,11 +121,12 @@ export const updateCart = async (req, res) => {
         })
 
     }
-
+    
 }
 
 export const removeFromCart = async (req, res) => {
     try {
+        console.log(req.body)
         const { itemId } = req.body;
 
         if (!itemId) {
@@ -142,11 +143,12 @@ export const removeFromCart = async (req, res) => {
                 success: false
             })
         }
-
+        
         const itemIndex = cart.item.findIndex(item => item.id.toString() === itemId.toString());
         if (itemIndex > -1) {
             cart.item.splice(itemIndex, 1); // 1 item ko remove kero
         } else {
+            console.log("error")
             return res.status(404).json({
                 message: "Item not found in cart",
                 success: false
