@@ -69,7 +69,7 @@ function LoginSignup({ setlogin }) {
   return (
     <div className="min-h-screen bg-gray-100 text-gray-800">
 
-      {!isLoggedIn ? (
+      
         <div className="flex items-center justify-center py-16 px-4">
 
           <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
@@ -174,7 +174,7 @@ function LoginSignup({ setlogin }) {
 
           </div>
         </div>
-      ) : <Navigate to="/"/>}
+     
 
     </div>
   );

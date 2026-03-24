@@ -19,15 +19,6 @@ export default function Productform() {
   const fetchProductsByid = async () => {
     try {
 
-      const res = await axios.post(
-        "http://localhost:3000/api/auth/verify",
-        {},
-        {
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        },
-      );
       // console.log(res.data.user.id);
       const ans =await axios.get(`http://localhost:3000/api/products/user`,{
         headers:{
