@@ -1,7 +1,7 @@
-import { FaHome, FaUser, FaComments, FaBars, FaForumbee, FaDollarSign, FaAccessibleIcon, FaAddressCard, FaCartPlus } from "react-icons/fa";
+import { FaHome, FaUser, FaComments, FaBars, FaForumbee, FaAddressCard, FaCartPlus } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
-export default function Sidebar({ open, setOpen }) {
+export default function Sidebar({ open, setOpen}) {
   const navigate = useNavigate();
 
   return (
@@ -9,7 +9,7 @@ export default function Sidebar({ open, setOpen }) {
       className={`bg-gray-900 text-white min-h-screen transition-all duration-300
       ${open ? "w-48 p-4" : "w-16 p-2"}` }
     >
-   
+
       <div className="flex flex-col gap-10" >
       <button  className="mb-6">
         <FaBars size={30}/>
@@ -34,11 +34,17 @@ export default function Sidebar({ open, setOpen }) {
           <FaAddressCard size={25}/>
           {open && <span>Login</span>}
         </button>
-        <button onClick={() => navigate("/productform")} className="flex items-center gap-3">
+    
+      <button onClick={() => navigate("/productform")} className="flex items-center gap-3">
           <FaForumbee size={25}/>
           {open && <span>Product Form</span>}
         </button>
+    
+       
+              
+     
+      
       </div>
-    </div>
+      </div>
   );
 }

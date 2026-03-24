@@ -100,25 +100,9 @@ const EcommerceHome = () => {
     <>
     <div className="min-h-screen bg-gray-100 text-gray-800">
 
-      {/* Navbar */}
-      <div className="flex justify-between items-center p-4 bg-slate-900/50 backdrop-blur-xl border-b border-cyan-400/20">
-
-        <h1 className="text-2xl font-bold text-cyan-400">
-          FABBUDS
-        </h1>
-
-        <div className="space-x-6">
-          <button className="hover:text-cyan-400">Home</button>
-          <button className="hover:text-cyan-400">Cart</button>
-          <button className="hover:text-cyan-400">Profile</button>
-        </div>
-
-      </div>
-
-
-      {/* Title */}
-      <h2 className="text-3xl font-bold text-center mt-6 text-cyan-400">
-        Rajasthan Handicrafts
+      
+      <h2 className="text-3xl font-bold text-center pt-6 text-blue-600">
+        Welcome To FabBuds
       </h2>
 
       

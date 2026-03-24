@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { FaFirstOrder } from "react-icons/fa";
 export default function CartPage() {
   const [cart, setCart] = useState({
     name:"",
@@ -71,7 +72,6 @@ const token=localStorage.getItem("token")
     }
   };
 
-  
   const clearAll = async () => {
     try {
       await axios.delete(API + "/clear", {
@@ -92,6 +92,7 @@ const token=localStorage.getItem("token")
   return (
     <div className="p-5 bg-gray-100 min-h-screen rounded-2xl">
       <h1 className="text-xl font-bold mb-4">My Cart</h1>
+    
       {/* <div className="bg-white p-4 rounded mb-4 shadow">
         <input
           value={productId}
@@ -117,7 +118,7 @@ const token=localStorage.getItem("token")
 
       
       <div className="bg-white p-4 rounded-2xl shadow">
-        {cart?.item?.length === 0 && <p>no item</p>}
+        {cart?.item?.length === 0 && <p>No Item in Cart</p>}
 
         {cart?.item?.map((i) => (
           
@@ -137,6 +138,7 @@ const token=localStorage.getItem("token")
             </button>
           </div>
         ))}
+          
 
 
         {cart?.item?.length > 0 && (
@@ -144,8 +146,19 @@ const token=localStorage.getItem("token")
             onClick={clearAll}
             className="bg-black text-white px-3 py-1 mt-3 rounded-2xl"
           >
-            clear cart
+            Clear Cart
           </button>
+          
+        )}
+
+        {cart?.item?.length > 0 && (
+          <button
+            onClick={""}
+            className="bg-red-500 text-white px-3 py-1 mt-3 rounded-2xl"
+          >
+            Order
+          </button>
+          
         )}
       </div>
    </div>
