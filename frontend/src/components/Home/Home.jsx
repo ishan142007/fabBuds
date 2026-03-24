@@ -100,7 +100,6 @@ const EcommerceHome = () => {
     <>
     <div className="min-h-screen bg-gray-100 text-gray-800">
 
-<<<<<<< HEAD:frontend/components/Home/Home.jsx
       {/* Navbar */}
       <div className="flex justify-between items-center p-4 bg-slate-900/50 backdrop-blur-xl border-b border-cyan-400/20">
 
@@ -120,11 +119,6 @@ const EcommerceHome = () => {
       {/* Title */}
       <h2 className="text-3xl font-bold text-center mt-6 text-cyan-400">
         Rajasthan Handicrafts
-=======
-      
-      <h2 className="text-3xl font-bold text-center pt-6 text-blue-600">
-        Welcome To FabBuds
->>>>>>> 9fd0e48137bed4011283388bd15512c0b50c21ab:frontend/src/components/Home/Home.jsx
       </h2>
 
       

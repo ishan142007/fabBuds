@@ -12,10 +12,32 @@ import CartPage from "./components/Cart/Cart";
 import Sidebar from "./components/auth/Sidebar";
 import Footer from "./components/auth/footer";
 import BottomNavbar from "./components/auth/bottom";
+import { useEffect } from "react";
+import axios from "axios";  
 
 function Rout() {
   const [login, setlogin] = useState(false);
   const [open, setOpen] = useState(false);
+  useEffect(() => {
+    const handlelogin=async()=>{
+      const token=localStorage.getItem("token");
+      if(!token )setlogin(false);
+      const ans= await axios.post("http://localhost:3000/api/auth/verify",{},{
+        headers:{
+          authorization:`Bearer ${token}`
+        }
+      }).then(()=>setlogin(true))
+      .catch((error)=>{
+        setlogin(false);
+        console.log(error)
+      })
+    }
+    handlelogin()
+  
+    
+  }, [])
+  
+  
 
   return (
     <div className="flex min-h-screen">
@@ -29,7 +51,7 @@ function Rout() {
         <div className="flex-1 p-4">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/LoginSignup" element={<LoginSignup setlogin={setlogin} />} />
+            <Route path="/LoginSignup" element={<LoginSignup />} />
             <Route path="/profile" element={<Customer />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/productform" element={<Productform />} />

@@ -43,7 +43,6 @@ export const getOrder = async (req, res) => {
         if (!order) {
             return res.status(404).json({ message: "Order not found", success: false });
         }
-<<<<<<< HEAD
         if (order.UserId.toString() !== req.user.id) {
             return res.status(403).json({ message: "Unauthorized access", success: false });
         }
@@ -57,17 +56,6 @@ export const getOrder = async (req, res) => {
             error: error
 
 
-=======
-        return res.status(200).json({message:"Order fetched successfully",success:true,order});
-        
-        
-    }catch (error){
-        return res.status(500).json({message:"server error",
-            success:false,
-            error:error
-            
-            
->>>>>>> 9fd0e48137bed4011283388bd15512c0b50c21ab
         })
     }
     
@@ -81,7 +69,6 @@ export const getOrders = async (req, res) => {
             success: true,
             orders
         })
-<<<<<<< HEAD
 
     } catch (error) {
         return res.status(500).json({
@@ -90,16 +77,6 @@ export const getOrders = async (req, res) => {
             success: false
 
 
-=======
-        
-    }catch (error){
-        return res.status(500).json({
-            message:"server error",
-            error:error,
-            success:false
-            
-            
->>>>>>> 9fd0e48137bed4011283388bd15512c0b50c21ab
         })
         
     }

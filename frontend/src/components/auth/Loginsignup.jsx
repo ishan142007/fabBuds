@@ -4,7 +4,6 @@ import axios from "axios";
 
 function LoginSignup({ setlogin }) {
 
- function LoginSignup({setlogin}) {
   const [activeTab, setActiveTab] = useState("login");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [role, setRole] = useState("");
@@ -68,17 +67,9 @@ function LoginSignup({ setlogin }) {
   };
 
   return (
-<<<<<<< HEAD:frontend/components/auth/Loginsignup.jsx
-    <div className="min-h-screen bg-gradient-to-br from-[#0f1c3f] to-[#1e3a8a] text-white">
-      {/* Header */}
-     
-
-      {/* If Not Logged In → Show Login/Signup */}
-=======
     <div className="min-h-screen bg-gray-100 text-gray-800">
 
->>>>>>> 9fd0e48137bed4011283388bd15512c0b50c21ab:frontend/src/components/auth/Loginsignup.jsx
-      {!isLoggedIn ? (
+      
         <div className="flex items-center justify-center py-16 px-4">
 
           <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
@@ -91,36 +82,22 @@ function LoginSignup({ setlogin }) {
             <div className="flex bg-gray-200 rounded-full p-1 my-6">
               <button
                 onClick={() => setActiveTab("login")}
-<<<<<<< HEAD:frontend/components/auth/Loginsignup.jsx
-                className={`flex-1 py-2 rounded-full transition-all duration-300 ${activeTab === "login"
-                    ? "bg-gradient-to-r from-teal-400 to-green-500 text-black"
-                    : "text-gray-300"
-                  }`}
-=======
                 className={`flex-1 py-2 rounded-full transition ${
                   activeTab === "login"
                     ? "bg-blue-500 text-white"
                     : "text-gray-600"
                 }`}
->>>>>>> 9fd0e48137bed4011283388bd15512c0b50c21ab:frontend/src/components/auth/Loginsignup.jsx
               >
                 Login
               </button>
 
               <button
                 onClick={() => setActiveTab("signup")}
-<<<<<<< HEAD:frontend/components/auth/Loginsignup.jsx
-                className={`flex-1 py-2 rounded-full transition-all duration-300 ${activeTab === "signup"
-                    ? "bg-gradient-to-r from-teal-400 to-green-500 text-black"
-                    : "text-gray-300"
-                  }`}
-=======
                 className={`flex-1 py-2 rounded-full transition ${
                   activeTab === "signup"
                     ? "bg-blue-500 text-white"
                     : "text-gray-600"
                 }`}
->>>>>>> 9fd0e48137bed4011283388bd15512c0b50c21ab:frontend/src/components/auth/Loginsignup.jsx
               >
                 Sign Up
               </button>
@@ -156,16 +133,11 @@ function LoginSignup({ setlogin }) {
               <input
                 type="password"
                 placeholder="Password"
-<<<<<<< HEAD:frontend/components/auth/Loginsignup.jsx
-                className="w-full px-4 py-3 rounded-lg bg-[#1b2a52] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400"
-                onChange={(e)=>setUser({...user,password:e.target.value})}
-=======
                 value={user.password}
                 onChange={(e) =>
                   setUser({ ...user, password: e.target.value })
                 }
                 className="w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-400"
->>>>>>> 9fd0e48137bed4011283388bd15512c0b50c21ab:frontend/src/components/auth/Loginsignup.jsx
                 required
               />
 
@@ -202,10 +174,10 @@ function LoginSignup({ setlogin }) {
 
           </div>
         </div>
-      ) : <Navigate to="/"/>}
+     
 
     </div>
   );
 }
-}
+
 export default LoginSignup;
