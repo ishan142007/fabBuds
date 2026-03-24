@@ -5,6 +5,6 @@ const router=express.Router();
 router.get("/",verifyToken,getCart);
 router.post ("/add",verifyToken,addToCart);
 router.put("/update",verifyToken,updateCart);
-router.delete("/remove/:itemId",verifyToken,removeFromCart);
 router.delete("/clear",verifyToken,clearCart);
+router.delete("/remove",verifyToken,removeFromCart);
 export default router;
