@@ -129,11 +129,11 @@ export default function Productform() {
       <div className="grid grid-cols-3 gap-4">
         {products &&
           products.map((p) => (
-            <div key={p._id} className="border p-3 rounded">
+            <div key={p._id} className="border  p-3 rounded-2xl m-1.5">
               <img
                 src={p.imageUrl}
                 alt=""
-                className="h-40 w-full object-cover"
+                className="h-40 w-full object-cover rounded-2xl"
               />
               <h2 className="font-bold">{p.name}</h2>
               <p>{p.description}</p>

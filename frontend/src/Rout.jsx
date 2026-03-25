@@ -11,7 +11,6 @@ import CartPage from "./components/Cart/Cart";
 
 import Sidebar from "./components/auth/Sidebar";
 import Footer from "./components/auth/footer";
-import BottomNavbar from "./components/auth/bottom";
 import { useEffect } from "react";
 import axios from "axios";  
 
@@ -50,8 +49,8 @@ function Rout() {
      
         <div className="flex-1 p-4">
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/LoginSignup" element={<LoginSignup />} />
+            <Route path="/" element={(login)?<Home />:<Navigate to="/LoginSignup" />} />
+            <Route path="/LoginSignup" element={<LoginSignup setlogin={setlogin} />} />
             <Route path="/profile" element={<Customer />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/productform" element={<Productform />} />

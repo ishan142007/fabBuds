@@ -4,9 +4,10 @@ import { useState,useEffect } from "react";
 import Sidebar from "../auth/Sidebar";
 
 const EcommerceHome = () => {
-  const [products, setProducts] = useState([])
-  const token=localStorage.getItem("token");
-  const[cart,setCart]=useState([]);
+  const [products, setProducts] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const token = localStorage.getItem("token");
+  const [cart, setCart] = useState([]);
 
   // const products = [
   //   {
@@ -98,69 +99,65 @@ const EcommerceHome = () => {
     }
   return (
     <>
-    <div className="min-h-screen bg-gray-100 text-gray-800">
+      <div className="min-h-screen bg-gray-100 text-gray-800">
+        <h2 className="text-3xl font-bold text-center pt-6 text-blue-600">
+          Welcome To FabBuds
+        </h2>
 
-      
-      <h2 className="text-3xl font-bold text-center pt-6 text-blue-600">
-        Welcome To FabBuds
-      </h2>
+        {/* Search Bar */}
+        <div className="flex justify-center mt-6 mb-4">
+          <input
+            type="text"
+            placeholder="Search products..."
+            value={searchTerm}
+            onChange={e => setSearchTerm(e.target.value)}
+            className="w-full max-w-md px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+        </div>
 
-      
-      <div className="grid md:grid-cols-4 gap-6 p-6">
-
-        {products.map((product) => (
-
-          <div
-            key={product.id}
-            className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg hover:scale-102 transition"
-          >
-
-          
-            <img
-              src={product.image}
-              alt={product.name}
-              className=" w-full h-48 object-cover"
-            />
- 
-            
-            <div className="p-4">
-
-              <h3 className="text-lg font-bold text-gray-900">
-                {product.name}
-              </h3>
-
-              <p className="text-gray-500 text-sm">
-                Vendor: {product.vendor}
-              </p>
-
-              <p className="text-gray-500 text-sm">
-                Location: {product.location}
-              </p>
-
-              <p className="text-yellow-500 text-sm">
-                ⭐ {product.rating}
-              </p>
-
-              <p className="text-blue-600 font-bold mt-1">
-                ₹{product.price}
-              </p>
-
-              <button className="w-full mt-3 py-2 rounded-lg bg-blue-500 text-white font-semibold hover:bg-blue-600 transition"
-              onClick={()=>handlecart(product)}
+        <div className="grid md:grid-cols-4 gap-6 p-6">
+          {products
+            .filter(product =>
+              product.name.toLowerCase().includes(searchTerm.toLowerCase())
+            )
+            .map(product => (
+              <div
+                key={product.id || product._id}
+                className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg hover:scale-102 transition cursor-pointer"
               >
-                Add to Cart
-              </button>
-
-            </div>
-
-          </div>
-
-        ))}
-
+                <img
+                  src={`${product.imageUrl}`}
+                  alt={product.name}
+                  className="w-full h-48 object-cover"
+                />
+                <div className="p-4">
+                  <h3 className="text-lg font-bold text-gray-900">
+                    {product.name}
+                  </h3>
+                  <p className="text-gray-500 text-sm">
+                    Vendor: {product.vendor}
+                  </p>
+                  <p className="text-gray-500 text-sm">
+                    Location: {product.location}
+                  </p>
+                  <p className="text-yellow-500 text-sm">
+                    ⭐ {product.rating}
+                  </p>
+                  <p className="text-blue-600 font-bold mt-1">
+                    ₹{product.price}
+                  </p>
+                  <button
+                    className="w-full mt-3 py-2 rounded-lg bg-blue-500 text-white font-semibold hover:bg-blue-600 transition"
+                    onClick={() => handlecart(product)}
+                  >
+                    Add to Cart
+                  </button>
+                </div>
+              </div>
+            ))}
+        </div>
       </div>
-
-    </div>
-                </>
+    </>
   );
 };
 
