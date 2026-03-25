@@ -26,6 +26,7 @@ function Rout() {
       if (!token) {
         setlogin(false);
         setRole("");
+        setLoading(false)
         return;
       }
       try {
@@ -41,6 +42,7 @@ function Rout() {
         setlogin(false);
         setRole("");
         // localStorage.removeItem("token")
+        setLoading(false)
         console.log(error);
       }
       finally{
