@@ -13,6 +13,7 @@ import CartPage from './components/Cart/Cart'
 import Sidebar from './components/auth/Sidebar'
 import Rout from './Rout'
 import Address from './components/Cart/Addressform'
+import OrderScreen from './components/Cart/OrderScreen'
 
 
 
@@ -25,11 +26,8 @@ function App() {
 
   return (
     <>
-    {/* <TopNavbar/> */}
-      
- 
+
    <Rout/>
-   <Address/>
    
     </>
     

@@ -1,5 +1,5 @@
+import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 export default function Address() {
 
@@ -15,12 +15,22 @@ export default function Address() {
     country: "India"
   });
 
+const location = useLocation();
+
+
+const cartItems = location.state?.cartItems || [];
+
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const handleSave = () => {
-    navigate("/summary", { state: form });
+    navigate("/order", {
+      state: {
+        cartItems,
+        address: form
+      }
+    });
   };
 
   return (

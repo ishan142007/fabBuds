@@ -5,14 +5,15 @@ export default function Sidebar({ open, setOpen, role, login }) {
   const navigate = useNavigate();
 
   return (
-    <div
-      onClick={() => setOpen(!open)}
-      className={`bg-gray-900 text-white min-h-screen transition-all duration-300 ${open ? "w-48 p-4" : "w-16 p-2"}`}
+    <div 
+      className={`bg-gray-900 text-white min-h-screen transition-all duration-300
+      ${open ? "w-48 p-4" : "w-16 p-2"}` }
     >
-      <div className="flex flex-col gap-10">
-        <button className="mb-6">
-          <FaBars size={30} />
-        </button>
+
+      <div className="flex flex-col gap-10" >
+      <button  className="mb-6" onClick={() => setOpen(!open)}>
+        <FaBars size={30}/>
+      </button>
 
         <button onClick={() => navigate("/")} className="flex items-center gap-3">
           <FaHome size={25} />
