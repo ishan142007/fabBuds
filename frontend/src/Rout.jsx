@@ -13,6 +13,8 @@ import Sidebar from "./components/auth/Sidebar";
 import Footer from "./components/auth/footer";
 import { useEffect } from "react";
 import axios from "axios";  
+import OrderScreen from "./components/Cart/OrderScreen";
+import Address from "./components/Cart/Addressform";
 
 function Rout() {
   const [login, setlogin] = useState(false);
@@ -70,6 +72,9 @@ function Rout() {
             <Route path="/cart" element={login ? <Cart /> : <Navigate to="/LoginSignup" />} />
             <Route path="/productform" element={login && isSellerOrAdmin ? <Productform /> : <Navigate to="/" />} />
             <Route path="/admin" element={login && role === "admin" ? <Admin /> : <Navigate to="/" />} />
+            <Route path="/order" element={<OrderScreen/>} />
+            <Route path="/address" element={<Address/>} />
+
             <Route path="/Cart" element={login ? <CartPage /> : <Navigate to="/LoginSignup" />} />
           </Routes>
         </div>

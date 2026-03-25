@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { FaFirstOrder } from "react-icons/fa";
@@ -15,6 +16,12 @@ export default function CartPage() {
   const[totalprice,settotalprice]=useState(0);
 const token=localStorage.getItem("token")
   const API = " http://localhost:3000/api/cart";
+    const navigate = useNavigate();
+  
+    const handleOrder = () => {
+      navigate("/address", { state: { cartItems: cart.item } });
+    };
+  
   const handleprice = async () =>{
     try {
       const res=await axios.post(API + "/totalprice",{
@@ -177,7 +184,7 @@ const token=localStorage.getItem("token")
 
         {cart?.item?.length > 0 && (
           <button
-          onClick={""}
+          onClick={handleOrder}
           className="bg-red-500 text-white px-3  py-1 mt-3 rounded-2xl"
           >
             Order
