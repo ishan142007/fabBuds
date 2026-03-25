@@ -66,9 +66,13 @@ export default function Productform() {
   const deleteProduct = async (id) => {
     try {
       await axios.delete(
-        `${"http://localhost:3000/api/products/delete"}/${id}`,
+        `${"http://localhost:3000/api/products/delete"}/${id}`,{
+          headers:{
+            authorization:`Bearer ${token}`
+          }
+        }
       );
-      fetchProducts();
+      // fetchProducts();
     } catch (err) {
       console.log("error", err);
     }

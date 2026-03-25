@@ -9,7 +9,7 @@ const orderSchema = new mongoose.Schema({
     },
     items: [
         {
-            ProductId: {
+            productId: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: "Product",
                 required: true
@@ -30,10 +30,15 @@ const orderSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    paymentStatus: {
+    orderStatus: {
         type: String,
         enum: ["processing", "shipped", "deliverd", "cancelled"],
         default: "processing"
+    },
+    paymentStatus:{
+        type:String,
+        enum:["pending","done","cancelled"],
+        default:"pending"
     }
 }, { timestamps: true });
 const Order = mongoose.model("Order", orderSchema);

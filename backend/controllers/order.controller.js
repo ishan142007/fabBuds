@@ -4,38 +4,43 @@ import cart from "../models/cart.modal.js";
 import Product from "../models/product.model.js";
 export const createOrder = async (req, res) => {
     try {
-        const { shippingaddress } = req.body;
-        const cartItems = await cart.find({ UserId: req.user._id });
-        if (!cart || cartItems.length === 0) {
+        const { shippingaddress } = req.body; //
+
+        const cartItems = await cart.findOne({ UserId: req.user.id });
+
+        if (!cartItems || cartItems.item.length === 0) {
             return res.status(400).json({ message: "Cart is empty", success: false });
         }
-        const orderItems = cart.items.map(item => ({
+
+        const orderItems = cartItems.item.map(item => ({
             productId: item.productId,
             quantity: item.quantity,
             price: item.price
         }));
+
+        const totalprice = cartItems.item.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
         const orderData = {
-            userId: req.user.id,
-            item: orderItems,
-            totalprice: cart.totalprice,
-            orderstatus: "processing",
-            paymentstaus: "pending",
+            UserId: req.user.id,
+            items: orderItems,
+            totalAmount: totalprice,
+            orderStatus: "processing",
+            paymentStatus: "pending",
             shippingaddress
-        }
+        };
+
         const order = await Order.create(orderData);
-        cart.items = [];
-        cart.totalprice = 0;
-        await cart.save();
+
+        cartItems.item = [];          
+        cartItems.totalAmount = 0;    
+        await cartItems.save();      
+
         return res.status(200).json({ message: "Order created successfully", success: true, order });
-        
-        
-        
-        
+
     } catch (error) {
-        return res.status(500).json({ message: "Server error", success: false, error });
-        
+        return res.status(500).json({ message: "Server error", success: false, error: error.message }); // ✅ readable error
     }
-}
+};
 export const getOrder = async (req, res) => {
     try {
         const orderId = req.params.id;
@@ -43,7 +48,7 @@ export const getOrder = async (req, res) => {
         if (!order) {
             return res.status(404).json({ message: "Order not found", success: false });
         }
-        if (order.UserId.toString() !== req.user.id) {
+        if (order.UserId.toString() !== req.user._id.toString()) {
             return res.status(403).json({ message: "Unauthorized access", success: false });
         }
         return res.status(200).json({ message: "Order fetched successfully", success: true, order });
@@ -63,7 +68,10 @@ export const getOrder = async (req, res) => {
 }
 export const getOrders = async (req, res) => {
     try {
-        const orders = await Order.find({ userId: req.user.id }).sort({ createdAt: -1 });
+        const orders = await Order.find({ UserId: req.user.id }).sort({ createdAt: -1 });
+        if (!orders || orders.length === 0) {
+    return res.status(404).json({ message: "No orders found", success: false });
+}
         return res.status(200).json({
             message: "Order fetched sucessfully",
             success: true,
