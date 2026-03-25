@@ -12,8 +12,26 @@ export default function CartPage() {
   const [Name, setName] = useState("")
   const [productId, setProductId] = useState("");
   const [qty, setQty] = useState(1);
+  const[totalprice,settotalprice]=useState(0);
 const token=localStorage.getItem("token")
   const API = " http://localhost:3000/api/cart";
+  const handleprice = async () =>{
+    try {
+      const res=await axios.post(API + "/totalprice",{
+        
+      },{
+        headers:{
+          Authorization:`Bearer ${token}` 
+        }
+      });
+      // console.log(res.data.totalprice)
+      settotalprice(res.data.totalprice)
+    } catch (error) {
+      console.log("error")
+      
+    }
+
+  }
   const getCart = async () => {
     try {
       const res = await axios.get(API , {
@@ -87,7 +105,11 @@ const token=localStorage.getItem("token")
 
   useEffect(() => {
     getCart();
+    
   }, []);
+  useEffect(()=>{
+    handleprice();
+  },[cart])
   
   return (
     <div className="p-5 bg-gray-100 min-h-screen rounded-2xl">
@@ -150,16 +172,19 @@ const token=localStorage.getItem("token")
           </button>
           
         )}
+        <div>
+          <div>Total Amount: {totalprice}</div>
 
         {cart?.item?.length > 0 && (
           <button
-            // onClick={""}
-            className="bg-red-500 text-white px-3 py-1 mt-3 rounded-2xl"
+          onClick={""}
+          className="bg-red-500 text-white px-3  py-1 mt-3 rounded-2xl"
           >
             Order
           </button>
           
-        )}
+          )}
+          </div>
       </div>
       
    </div>

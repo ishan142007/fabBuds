@@ -12,6 +12,7 @@ import Productform from './components/Cart/productform'
 import CartPage from './components/Cart/Cart'
 import Sidebar from './components/auth/Sidebar'
 import Rout from './Rout'
+import Address from './components/Cart/Addressform'
 
 
 
@@ -28,6 +29,7 @@ function App() {
       
  
    <Rout/>
+   <Address/>
    
     </>
     
