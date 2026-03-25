@@ -14,6 +14,7 @@ import Footer from "./components/auth/footer";
 import { useEffect } from "react";
 import axios from "axios";  
 import OrderScreen from "./components/Cart/OrderScreen";
+import Orders from "./components/Cart/Orders";
 import Address from "./components/Cart/Addressform";
 
 function Rout() {
@@ -73,6 +74,7 @@ function Rout() {
             <Route path="/productform" element={login && isSellerOrAdmin ? <Productform /> : <Navigate to="/" />} />
             <Route path="/admin" element={login && role === "admin" ? <Admin /> : <Navigate to="/" />} />
             <Route path="/order" element={<OrderScreen/>} />
+            <Route path="/orders" element={login ? <Orders /> : <Navigate to="/LoginSignup" />} />
             <Route path="/address" element={<Address/>} />
 
             <Route path="/Cart" element={login ? <CartPage /> : <Navigate to="/LoginSignup" />} />

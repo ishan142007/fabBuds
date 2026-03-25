@@ -1,4 +1,4 @@
-import { FaHome, FaUser, FaComments, FaBars, FaForumbee, FaAddressCard, FaCartPlus } from "react-icons/fa";
+import { FaHome, FaUser, FaComments, FaBars, FaForumbee, FaAddressCard, FaCartPlus, FaClipboardList } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 export default function Sidebar({ open, setOpen, role, login }) {
@@ -23,6 +23,12 @@ export default function Sidebar({ open, setOpen, role, login }) {
         <button onClick={() => navigate("/cart")} className="flex items-center gap-3">
           <FaCartPlus size={25} />
           {open && <span>Cart</span>}
+        </button>
+
+
+        <button onClick={() => navigate("/orders")} className="flex items-center gap-3">
+          <FaClipboardList size={25} />
+          {open && <span>Orders</span>}
         </button>
 
         <button onClick={() => navigate("/profile")} className="flex items-center gap-3">

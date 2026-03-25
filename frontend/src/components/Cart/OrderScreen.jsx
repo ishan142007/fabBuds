@@ -1,7 +1,10 @@
-import { useLocation } from "react-router-dom";
+import axios from "axios";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function Order() {
+  const token=localStorage.getItem("token")
   const location = useLocation();
+  const navigate=useNavigate();
 
   const cartItems = location.state?.cartItems || [];
   const address = location.state?.address || {};
@@ -10,6 +13,19 @@ export default function Order() {
     (sum, item) => sum + item.price * item.quantity,
     0
   );
+  const handleOrder=async()=>{
+    try {
+      const ans=await axios.post("http://localhost:3000/api/orders/create",{},{
+        headers:{
+          Authorization:`Bearer ${token}`
+        }
+      })
+      alert("order completed")
+      navigate('/');
+    } catch (error) {
+      alert("error occured")
+    }
+  }
   
 
   return (
@@ -48,7 +64,9 @@ export default function Order() {
         </div>
 
      
-        <button className="w-full mt-5 bg-blue-300 text-white py-2 rounded-lg hover:bg-blue-500">
+        <button className="w-full mt-5 bg-blue-300 text-white py-2 rounded-lg hover:bg-blue-500"
+          onClick={()=>{handleOrder()}}
+        >
           Place Order
 
         </button>
