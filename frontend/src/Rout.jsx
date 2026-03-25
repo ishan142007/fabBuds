@@ -38,6 +38,7 @@ function Rout() {
         // localStorage.setItem("token",res.data.ans.token)
         setlogin(true);
         setRole(res.data.ans.role);
+        
       } catch (error) {
         setlogin(false);
         setRole("");

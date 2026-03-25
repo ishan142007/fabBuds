@@ -24,6 +24,7 @@ function profile(){
     id:"",
     email:"",
     role:"",
+    imageUrl:"",
     address:"",
     joined:"",
   })
@@ -53,7 +54,7 @@ function profile(){
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6">  <div className=" items-center gap-6 border-b pb-6">
           <img
-            src={profile.image}
+            src={profile.imageUrl}
             alt="Profile"
             className=" h-20 rounded-full border-4 "
           />
