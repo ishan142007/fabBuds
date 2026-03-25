@@ -173,10 +173,10 @@ export const admindel=async(req,res)=>{
 
 export const profile=async(req,res)=>{
     const userId=req.user.id;
-    console.log(userId)
+    // console.log(userId)
     try {
         const ans=await User.findById(userId)
-        console.log(ans)
+        // console.log(ans)
         return res.status(200).json({
             message:"profile loaded",
             success:true,
