@@ -17,51 +17,61 @@ import axios from "axios";
 function Rout() {
   const [login, setlogin] = useState(false);
   const [open, setOpen] = useState(false);
+  const [role, setRole] = useState("");
+  const [loading, setLoading] = useState(true)
+
+  const token = localStorage.getItem("token");
   useEffect(() => {
-    const handlelogin=async()=>{
-      const token=localStorage.getItem("token");
-      if(!token )setlogin(false);
-      const ans= await axios.post("http://localhost:3000/api/auth/verify",{},{
-        headers:{
-          authorization:`Bearer ${token}`
-        }
-      }).then(()=>setlogin(true))
-      .catch((error)=>{
+    const handlelogin = async () => {
+      if (!token) {
         setlogin(false);
-        console.log(error)
-      })
-    }
-    handlelogin()
-  
-    
-  }, [])
-  
-  
+        setRole("");
+        return;
+      }
+      try {
+        const res = await axios.get("http://localhost:3000/api/auth/profile", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        // localStorage.setItem("token",res.data.ans.token)
+        setlogin(true);
+        setRole(res.data.ans.role);
+      } catch (error) {
+        setlogin(false);
+        setRole("");
+        // localStorage.removeItem("token")
+        console.log(error);
+      }
+      finally{
+        setLoading(false)
+      }
+    };
+    handlelogin();
+  }, []);
+
+  if(loading) return <div>loading....</div>
+  // console.log(login)
+  // Helper for product-related route protection
+  const isSellerOrAdmin = role === "seller" || role === "admin";
 
   return (
     <div className="flex min-h-screen">
-      
-      
-      <Sidebar open={open} setOpen={setOpen} />
-
-      
+      <Sidebar open={open} setOpen={setOpen} role={role} login={login} />
       <div className="flex-1 flex flex-col">
-     
         <div className="flex-1 p-4">
           <Routes>
-            <Route path="/" element={(login)?<Home />:<Navigate to="/LoginSignup" />} />
+            <Route path="/" element={login ? <Home role={role} /> : <Navigate to="/LoginSignup" />} />
             <Route path="/LoginSignup" element={<LoginSignup setlogin={setlogin} />} />
-            <Route path="/profile" element={<Customer />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/productform" element={<Productform />} />
-            <Route path="/Admin" element={<Admin />} />
-            <Route path="/Cart" element={<CartPage />} />
+            <Route path="/profile" element={login ? <Customer /> : <Navigate to="/LoginSignup" />} />
+            <Route path="/cart" element={login ? <Cart /> : <Navigate to="/LoginSignup" />} />
+            <Route path="/productform" element={login && isSellerOrAdmin ? <Productform /> : <Navigate to="/" />} />
+            <Route path="/admin" element={login && role === "admin" ? <Admin /> : <Navigate to="/" />} />
+            <Route path="/Cart" element={login ? <CartPage /> : <Navigate to="/LoginSignup" />} />
           </Routes>
         </div>
-
         {/* Footer + Bottom Nav */}
         <Footer />
-      
       </div>
     </div>
   );
