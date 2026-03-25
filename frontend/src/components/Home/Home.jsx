@@ -3,7 +3,7 @@ import React from "react";
 import { useState,useEffect } from "react";
 import Sidebar from "../auth/Sidebar";
 
-const EcommerceHome = () => {
+const EcommerceHome = ({role}) => {
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const token = localStorage.getItem("token");
