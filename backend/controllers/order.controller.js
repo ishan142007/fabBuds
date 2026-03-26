@@ -15,7 +15,8 @@ export const createOrder = async (req, res) => {
         const orderItems = cartItems.item.map(item => ({
             productId: item.productId,
             quantity: item.quantity,
-            price: item.price
+            price: item.price,
+            name:item.name
         }));
 
         const totalprice = cartItems.item.reduce((sum, item) => sum + item.price * item.quantity, 0);
@@ -91,6 +92,23 @@ export const getOrders = async (req, res) => {
     
     
     
+}
+export const clearOrder=async(req,res)=>{
+    try {
+        const clear=await Order.find({UserId:req.user.id});
+        clear.items=[];
+        await Order.save();
+        res.status(200).json({
+            message:"orders cleared",
+            success:true,
+
+        })
+    } catch (error) {
+        res.status(500).json({
+            message:"error occured",
+            error:error
+        })
+    }
 }
 // import express from "express";
 // import Order from "../models/order.models";
