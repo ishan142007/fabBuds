@@ -58,7 +58,6 @@ export const signup = async (req, res) => {
             email,
             password,
             role,
-            imageUrl
         })
 
         const token = generateToken(newUser._id,newUser.role);

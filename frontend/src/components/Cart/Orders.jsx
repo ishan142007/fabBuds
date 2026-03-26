@@ -26,7 +26,14 @@ export default function Orders() {
     };
     fetchOrders();
   }, [token]);
-
+  console.log(orders)
+const clearorders=async()=>{
+    try {
+        // const res=await axios.delete()
+    } catch (error) {
+        
+    }
+}
   return (
     <div className="p-6">
       <h2 className="text-2xl font-bold mb-4 text-blue-700">Your Orders</h2>
@@ -59,7 +66,8 @@ export default function Orders() {
                     {order.items && order.items.length > 0 ? (
                       <ul className="list-disc pl-4">
                         {order.items.map((item, idx) => (
-                          <li key={idx}>{item.ProductId ? item.ProductId.name || item.ProductId : "Product"} x {item.quantity}</li>
+                           
+                          <li key={idx}>{item.productId ? item.name || item.ProductId : "Product"} x {item.quantity}</li>
                         ))}
                       </ul>
                     ) : (
@@ -72,6 +80,7 @@ export default function Orders() {
           </table>
         </div>
       )}
+      <div onClick={()=>clearorders}>clear cart</div>
     </div>
   );
 }

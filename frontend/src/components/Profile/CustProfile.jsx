@@ -53,11 +53,7 @@ function profile(){
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6">  <div className=" items-center gap-6 border-b pb-6">
-          <img
-            src={profile.imageUrl}
-            alt="Profile"
-            className=" h-20 rounded-full border-4 "
-          />
+          
       <div className="bg-white shadow-xl rounded-2xl w-full max-w-4xl p-6">
 
         {/* Header */}
@@ -71,15 +67,7 @@ function profile(){
               profile ID: {profile._id}
             </p>
 
-            {/* <span
-              className={`inline-block mt-2 px-3 py-1 text-sm rounded-full ${
-                profile.status === "Active"
-                  ? "bg-green-100 text-green-600"
-                  : "bg-red-100 text-red-600"
-              }`}
-            >
-              {profile.status}
-            </span> */}
+          
           </div>
         </div>
 

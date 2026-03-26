@@ -126,7 +126,7 @@ export const updateCart = async (req, res) => {
 
 export const removeFromCart = async (req, res) => {
     try {
-        console.log(req.body)
+       
         const { itemId } = req.body;
 
         if (!itemId) {
