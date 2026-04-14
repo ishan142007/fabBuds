@@ -32,6 +32,11 @@ export const createOrder = async (req, res) => {
 
         const order = await Order.create(orderData);
 
+        // Reduce stock for each product
+        for (const item of orderItems) {
+            await Product.findByIdAndUpdate(item.productId, { $inc: { stock: -item.quantity } });
+        }
+
         cartItems.item = [];          
         cartItems.totalAmount = 0;    
         await cartItems.save();      
@@ -93,23 +98,34 @@ export const getOrders = async (req, res) => {
     
     
 }
-export const clearOrder=async(req,res)=>{
+export const updateOrderStatus = async (req, res) => {
     try {
-        const clear=await Order.find({UserId:req.user.id});
-        clear.items=[];
-        await Order.save();
-        res.status(200).json({
-            message:"orders cleared",
-            success:true,
+        const { id } = req.params;
+        const { orderStatus, paymentStatus } = req.body;
 
-        })
+        const updateData = {};
+        if (orderStatus) updateData.orderStatus = orderStatus;
+        if (paymentStatus) updateData.paymentStatus = paymentStatus;
+
+        const order = await Order.findByIdAndUpdate(id, updateData, { new: true });
+        if (!order) {
+            return res.status(404).json({ message: "Order not found", success: false });
+        }
+
+        return res.status(200).json({ message: "Order updated successfully", success: true, order });
     } catch (error) {
-        res.status(500).json({
-            message:"error occured",
-            error:error
-        })
+        return res.status(500).json({ message: "Server error", success: false, error: error.message });
     }
-}
+};
+
+export const getAllOrders = async (req, res) => {
+    try {
+        const orders = await Order.find({}).populate('UserId', 'fullname email').sort({ createdAt: -1 });
+        return res.status(200).json({ message: "All orders fetched", success: true, orders });
+    } catch (error) {
+        return res.status(500).json({ message: "Server error", success: false, error: error.message });
+    }
+};
 // import express from "express";
 // import Order from "../models/order.models";
 // import cart from "../models/cart.modal";

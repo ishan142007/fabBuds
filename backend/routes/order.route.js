@@ -1,8 +1,11 @@
-import { createOrder,getOrder,getOrders } from "../controllers/order.controller.js";
+import { createOrder,getOrder,getOrders, updateOrderStatus, getAllOrders } from "../controllers/order.controller.js";
 import express from "express";
 import {verifyToken} from "../Middleware/verifyToken.middle.js";
+import { authrole } from "../Middleware/role.middle.js";
 const router=express.Router();
 router.post ("/create",verifyToken,createOrder);
 router.post("/getOrder/:id", verifyToken, getOrder);
 router.post("/getOrders", verifyToken, getOrders);
+router.put("/update/:id", verifyToken, authrole("admin"), updateOrderStatus);
+router.get("/all", verifyToken, authrole("admin"), getAllOrders);
 export default router;

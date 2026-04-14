@@ -7,17 +7,22 @@ export const getCart = async (req, res) => {
         if (!cart) {
             cart = await Cart.create({ UserId: req.user.id, item: [] });
         }
+        // Calculate total price
+        const totalprice = cart.item.reduce((sum, item) => sum + item.price * item.quantity, 0);
+        cart.totalprice = totalprice;
+        await cart.save();
+
         return res.status(200).json({
-            message: "Cart retrived successfully",
+            message: "Cart retrieved successfully",
             success: true,
             cart: cart
-        })
+        });
 
     } catch (error) {
         res.status(500).json({
             message: "Internal server error",
-            sucess: false,
-            error: error
+            success: false,
+            error: error.message
         });
     }
 }

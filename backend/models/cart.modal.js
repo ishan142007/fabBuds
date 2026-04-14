@@ -34,19 +34,10 @@ const cartSchema = new mongoose.Schema({
         }
     ],
     totalprice:{
-        // type:number
-        // default:'0',
-
-
+        type: Number,
+        default: 0
     }
 
 },{timestamps:true});
-cartSchema.pre("save",function(next){
-this.totalprice =this .item.reduce((acc,curr)=>{
-    return acc + (curr.quantity * curr.productId.price);
-    next();
-},0)
-
-})
 const Cart = mongoose.model("Cart", cartSchema)
 export default Cart;

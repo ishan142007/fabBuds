@@ -20,10 +20,11 @@ export default function Order() {
           Authorization:`Bearer ${token}`
         }
       })
-      alert("order completed")
+      alert("Order placed successfully!")
       navigate('/');
     } catch (error) {
-      alert("error occured")
+      console.error("Order error:", error);
+      alert("Failed to place order. Please try again.");
     }
   }
   

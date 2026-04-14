@@ -35,31 +35,55 @@ export const createProduct = async (req, res) => {
 }
 
 
-export const getAllProducts = async (req, res) => {//api hai get all product 
+export const getAllProducts = async (req, res) => {
     try {
-        const { search="",category="", minPrice, maxPrice, sort, page=1 } = req.query;
-        const pageSize = 10;
+        const { search = "", category = "", minPrice, maxPrice, sort, page = 1, limit = 10 } = req.query;
+        const pageSize = parseInt(limit);
+        const currentPage = parseInt(page);
         let filter = {};
 
-        const total = await Product.countDocuments();
+        if (search) {
+            filter.name = { $regex: search, $options: "i" };
+        }
+        if (category) {
+            filter.category = { $regex: category, $options: "i" };
+        }
+        if (minPrice || maxPrice) {
+            filter.price = {};
+            if (minPrice) filter.price.$gte = parseFloat(minPrice);
+            if (maxPrice) filter.price.$lte = parseFloat(maxPrice);
+        }
+
+        let sortOption = {};
+        if (sort === "price_asc") sortOption.price = 1;
+        else if (sort === "price_desc") sortOption.price = -1;
+        else if (sort === "name_asc") sortOption.name = 1;
+        else if (sort === "name_desc") sortOption.name = -1;
+        else sortOption.createdAt = -1;
+
+        const total = await Product.countDocuments(filter);
         const totalPages = Math.ceil(total / pageSize);
 
-        const products = await Product.find({});
+        const products = await Product.find(filter)
+            .sort(sortOption)
+            .skip((currentPage - 1) * pageSize)
+            .limit(pageSize);
+
         return res.status(200).json({
             message: "Products fetched successfully",
             success: true,
             products,
             total,
             totalPages,
-            currentPage: parseInt(page)
-        })
+            currentPage
+        });
 
     } catch (error) {
         return res.status(500).json({
             message: "Server error",
             success: false,
-            error: error
-        })
+            error: error.message
+        });
     }
 }
 
