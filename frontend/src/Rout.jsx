@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-
 import Home from "./components/Home/Home";
 import LoginSignup from "./components/auth/Loginsignup";
 import Customer from "./components/Profile/CustProfile";
@@ -33,7 +32,7 @@ function Rout() {
         return;
       }
       try {
-        const res = await axios.get("http://localhost:3000/api/auth/profile", {
+        const res = await axios.get("http://localhost:3000/api/auth/profile" , {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -68,15 +67,14 @@ function Rout() {
         <div className="flex-1 p-4">
           <Routes>
             <Route path="/" element={login ? <Home role={role} /> : <Navigate to="/LoginSignup" />} />
-            <Route path="/LoginSignup" element={<LoginSignup setlogin={setlogin} />} />
-            <Route path="/profile" element={login ? <Customer /> : <Navigate to="/LoginSignup" />} />
+            <Route path="/LoginSignup" element={<LoginSignup  setlogin={setlogin} />} />
+            <Route path="/profile" element={login ?  <Customer /> : <Navigate to="/LoginSignup" />} />
             <Route path="/cart" element={login ? <Cart /> : <Navigate to="/LoginSignup" />} />
             <Route path="/productform" element={login && isSellerOrAdmin ? <Productform /> : <Navigate to="/" />} />
             <Route path="/admin" element={login && role === "admin" ? <Admin /> : <Navigate to="/" />} />
             <Route path="/order" element={<OrderScreen/>} />
-            <Route path="/orders" element={login ? <Orders /> : <Navigate to="/LoginSignup" />} />
+            <Route path="/orders" element={login ?  <Orders /> : <Navigate to="/LoginSignup" />} />
             <Route path="/address" element={<Address/>} />
-
             <Route path="/Cart" element={login ? <CartPage /> : <Navigate to="/LoginSignup" />} />
           </Routes>
         </div>
