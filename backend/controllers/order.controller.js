@@ -39,12 +39,13 @@ export const createOrder = async (req, res) => {
 
         cartItems.item = [];          
         cartItems.totalAmount = 0;    
-        await cartItems.save();      
+        await cartItems.save(); 
+             
 
         return res.status(200).json({ message: "Order created successfully", success: true, order });
 
     } catch (error) {
-        return res.status(500).json({ message: "Server error", success: false, error: error.message }); // ✅ readable error
+        return res.status(500).json({ message: "Server error", success: false, error: error.message }); // readable error
     }
 };
 export const getOrder = async (req, res) => {
@@ -126,81 +127,3 @@ export const getAllOrders = async (req, res) => {
         return res.status(500).json({ message: "Server error", success: false, error: error.message });
     }
 };
-// import express from "express";
-// import Order from "../models/order.models";
-// import cart from "../models/cart.modal";
-// import Product from "../models/product.model";
-// export const createOrder = async (req, res) => {
-//     try {
-//         const { UserId, items, totalAmount,paymentStatus } = req.body;
-//         if (!UserId || !items || !Array.isArray(items) || items.length === 0 || !totalAmount) {
-//             return res.status(400).json({ message: "All required fields must be provided", success: false });
-//         }
-
-//         const order = await Order.create({ UserId, items, totalAmount, paymentStatus });
-//         return res.status(200).json({ message: "Order created successfully", success: true, order });
-//     } catch (error) {
-//         return res.status(500).json({ message: "Server error", success: false, error });
-//     }
-// };
-
-// export const getOrderById = async (req, res) => {
-//     try {
-//         const order = await Order.findById(req.params.id).populate("UserId").populate("items.ProductId");
-//         if (!order) return res.status(400).json({ message: "Order not found", success: false });
-//         return res.status(200).json({ message: "Order fetched successfully", success: true, order });
-//     } catch (error) {
-//         return res.status(500).json({ message: "Server error", success: false, error });
-//     }
-// };
-
-// export const getOrdersByUser = async (req, res) => {
-//     try {
-//         const userId = req.params.userId;
-//         const orders = await Order.find({ UserId: userId }).populate("items.ProductId");
-//         return res.status(200).json({ message: "User orders fetched", success: true, orders });
-//     } catch (error) {
-//         return res.status(500).json({ message: "Server error", success: false, error });
-//     }
-// };
-
-// export const getAllOrders = async (req, res) => {
-//     try {
-//         const orders = await Order.find({}).populate("UserId").populate("items.ProductId");
-//         return res.status(200).json({ message: "All orders fetched", success: true, orders });
-//     } catch (error) {
-//         return res.status(500).json({ message: "Server error", success: false, error });
-//     }
-// };
-
-// export const updateOrderStatus = async (req, res) => {
-//     try {
-//         const { status } = req.body;
-//         if (!status) return res.status(400).json({ message: "Status is required", success: false });
-
-//         const updated = await Order.findByIdAndUpdate(req.params.id, { paymentStatus: status }, { new: true });
-//         if (!updated) return res.status(404).json({ message: "Order not found", success: false });
-//         return res.status(200).json({ message: "Order status updated", success: true, order: updated });
-//     } catch (error) {
-//         return res.status(500).json({ message: "Server error", success: false, error });
-//     }
-// };
-
-// export const deleteOrder = async (req, res) => {
-//     try {
-//         const deleted = await Order.findByIdAndDelete(req.params.id);
-//         if (!deleted) return res.status(404).json({ message: "Order not found", success: false });
-//         return res.status(200).json({ message: "Order deleted", success: true, order: deleted });
-//     } catch (error) {
-//         return res.status(500).json({ message: "Server error", success: false, error });
-//     }
-// };
-
-// export default {
-//     createOrder,
-//     getOrderById,
-//     getOrdersByUser,
-//     getAllOrders,
-//     updateOrderStatus,
-//     deleteOrder
-// };

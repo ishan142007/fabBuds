@@ -40,7 +40,7 @@ export default function Productform() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const ans = await axios.post(
+   await axios.post(
         "http://localhost:3000/api/products/create",
         { ...form },{
           headers:{

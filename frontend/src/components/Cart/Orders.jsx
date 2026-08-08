@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import swal from "sweetalert2";
 
 export default function Orders() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const token = localStorage.getItem("token");
+  
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -26,7 +28,7 @@ export default function Orders() {
     };
     fetchOrders();
   }, [token]);
-  console.log(orders)
+
 const clearorders=async()=>{
     try {
         // const res=await axios.delete()
@@ -80,7 +82,7 @@ const clearorders=async()=>{
           </table>
         </div>
       )}
-      <div onClick={()=>clearorders}>clear cart</div>
+      {/* <div onClick={()=>clearorders}>clear orders</div> */}
     </div>
   );
 }

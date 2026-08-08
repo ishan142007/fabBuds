@@ -15,7 +15,7 @@ export default function Order() {
   );
   const handleOrder=async()=>{
     try {
-      const ans=await axios.post("http://localhost:3000/api/orders/create",{},{
+      await axios.post("http://localhost:3000/api/orders/create",{},{
         headers:{
           Authorization:`Bearer ${token}`
         }

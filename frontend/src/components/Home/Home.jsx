@@ -1,13 +1,20 @@
 import axios from "axios";
 import React from "react";
 import { useState,useEffect } from "react";
+import Swal from "sweetalert2";
 import Sidebar from "../auth/Sidebar";
 
-const EcommerceHome = ({role}) => {
+const EcommerceHome = () => {
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const token = localStorage.getItem("token");
-  const [cart, setCart] = useState([]);
+  // const [cart, setCart] = useState([]);
+  const popup=()=>{
+      Swal.fire({
+        title:"success",
+        text:"item added to cart"
+      })
+    }
 
   // const products = [
   //   {
@@ -82,7 +89,7 @@ const EcommerceHome = ({role}) => {
       const id=product._id;
       // console.log(id)
       try {
-        const res=await axios.post(
+        await axios.post(
           "http://localhost:3000/api/cart/add",
           {productId:id,quantity:1},
           {
@@ -134,12 +141,12 @@ const EcommerceHome = ({role}) => {
                   <h3 className="text-lg font-bold text-gray-900">
                     {product.name}
                   </h3>
-                  <p className="text-gray-500 text-sm">
+                  {/* <p className="text-gray-500 text-sm">
                     Vendor: {product.vendor}
-                  </p>
-                  <p className="text-gray-500 text-sm">
+                  </p> */}
+                  {/* <p className="text-gray-500 text-sm">
                     Location: {product.location}
-                  </p>
+                  </p> */}
                   <p className="text-yellow-500 text-sm">
                     ⭐ {product.rating}
                   </p>
@@ -148,7 +155,9 @@ const EcommerceHome = ({role}) => {
                   </p>
                   <button
                     className="w-full mt-3 py-2 rounded-lg bg-blue-500 text-white font-semibold hover:bg-blue-600 transition"
-                    onClick={() => handlecart(product)}
+                    onClick={() =>{ handlecart(product)
+                      popup();
+                    }}
                   >
                     Add to Cart
                   </button>
