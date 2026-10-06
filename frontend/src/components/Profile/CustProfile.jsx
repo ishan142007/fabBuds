@@ -1,148 +1,73 @@
-import React from "react";
-import { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useState } from "react";
+import { FiLogOut, FiMapPin, FiMail, FiShield, FiClock } from "react-icons/fi";
+import PageShell from "../ui/PageShell";
 
-function profile(){
-  const token=localStorage.getItem("token")
+function profile() {
+  const token = localStorage.getItem("token");
+  const [profile, setProfile] = useState({ fullname: "", _id: "", email: "", role: "", address: "", createdAt: "" });
 
-  
-  // let profile = {
-  //   fullname: "Ishan Singh Patel",
-  //   _id: "#12345",
-  //   email: "ishan4578@gmail.com",
-  //   phone: "+91 9785461636",
-  //   address: ",Alwar Rajasthan",
-  //   joined: "12 Jan 2024",
-  //   orders: 25,
-  //   spent: "₹15,000",
-  //   status: "Active",
-  //   image: "https://media.istockphoto.com/id/814423752/photo/eye-of-model-with-colorful-art-make-up-close-up.jpg?s=612x612&w=0&k=20&c=l15OdMWjgCKycMMShP8UK94ELVlEGvt7GmB_esHWPYE=",
-  // };
-  const [profile, setProfile] = useState({
-    fullname:"",
-    id:"",
-    email:"",
-    role:"",
-    imageUrl:"",
-    address:"",
-    joined:"",
-  })
   useEffect(() => {
-    const handleProfile=async()=>{
+    const handleProfile = async () => {
       try {
-        const user=await axios.get("http://localhost:3000/api/auth/profile",{
-          headers:{
-            Authorization:`Bearer ${token}`
-          }
-        })
-        // console.log(user.data.ans);
-        const identity=user.data.ans
-        setProfile({...identity,joined:identity.createdAt})
-        
-        
+        const user = await axios.get("http://localhost:3000/api/auth/profile", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const identity = user.data.ans;
+        setProfile({ ...identity, createdAt: identity.createdAt || "" });
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
-      }
-    handleProfile()
-  
-    
-  }, [])
-  
+    };
+    handleProfile();
+  }, [token]);
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6">  <div className=" items-center gap-6 border-b pb-6">
-          
-      <div className="bg-white shadow-xl rounded-2xl w-full max-w-4xl p-6">
+    <PageShell title="Your account" subtitle="A calm place to review your details, access your orders, and keep your information up to date." compact>
+      <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+        <div className="rounded-[32px] border border-[#eadfd3] bg-white p-6 shadow-[0_20px_60px_-30px_rgba(15,23,42,0.18)] sm:p-8">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.3em] text-slate-500">Member since</p>
+              <h2 className="mt-2 text-2xl font-semibold text-slate-900">{profile.fullname || "Welcome"}</h2>
+              <p className="mt-2 text-sm text-slate-600">{profile.email}</p>
+            </div>
+            <button onClick={() => { localStorage.removeItem("token"); window.location.reload(); }} className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-700">
+              <FiLogOut className="h-4 w-4" /> Logout
+            </button>
+          </div>
 
-        {/* Header */}
-      
-
-          <div>
-            <h2 className="text-2xl font-bold text-gray-800">
-              {profile.fullname}
-            </h2>
-            <p className="text-gray-500">
-              profile ID: {profile._id}
-            </p>
-
-          
+          <div className="mt-6 grid gap-4 sm:grid-cols-2">
+            <div className="rounded-[20px] bg-[#fcfaf7] p-4">
+              <div className="mb-3 inline-flex rounded-full bg-white p-2 text-slate-700"><FiMail className="h-4 w-4" /></div>
+              <p className="text-sm font-semibold text-slate-900">Email</p>
+              <p className="mt-1 text-sm text-slate-600">{profile.email}</p>
+            </div>
+            <div className="rounded-[20px] bg-[#fcfaf7] p-4">
+              <div className="mb-3 inline-flex rounded-full bg-white p-2 text-slate-700"><FiShield className="h-4 w-4" /></div>
+              <p className="text-sm font-semibold text-slate-900">Role</p>
+              <p className="mt-1 text-sm text-slate-600">{profile.role || "Customer"}</p>
+            </div>
+            <div className="rounded-[20px] bg-[#fcfaf7] p-4 sm:col-span-2">
+              <div className="mb-3 inline-flex rounded-full bg-white p-2 text-slate-700"><FiMapPin className="h-4 w-4" /></div>
+              <p className="text-sm font-semibold text-slate-900">Primary address</p>
+              <p className="mt-1 text-sm text-slate-600">{profile.address || "Add your shipping address from checkout to speed up future orders."}</p>
+            </div>
           </div>
         </div>
 
-        {/* Info Section */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-
-          {/* Left */}
-          <div className="space-y-4">
-            <div>
-              <p className="text-gray-500 text-sm">Email</p>
-              <p className="text-gray-800 font-medium">
-                {profile.email}
-              </p>
-            </div>
-
-            {/* <div>
-              <p className="text-gray-500 text-sm">Phone</p>
-              <p className="text-gray-800 font-medium">
-                {profile.phone}
-              </p>
-            </div> */}
-
-            <div>
-              <p className="text-gray-500 text-sm">Address</p>
-              <p className="text-gray-800 font-medium">
-                {profile.address}
-              </p>
-            </div>
+        <div className="rounded-[32px] border border-[#eadfd3] bg-[#111827] p-6 text-white shadow-[0_20px_60px_-30px_rgba(15,23,42,0.6)] sm:p-8">
+          <div className="inline-flex rounded-full bg-white/10 p-2"><FiClock className="h-4 w-4" /></div>
+          <h3 className="mt-4 text-2xl font-semibold">Your next best step</h3>
+          <p className="mt-3 text-sm leading-7 text-slate-300">Keep your account ready for faster checkout, saved favorites, and delivery updates whenever an order moves ahead.</p>
+          <div className="mt-6 rounded-[24px] border border-white/10 bg-white/10 p-4">
+            <p className="text-sm font-semibold text-white">Account ID</p>
+            <p className="mt-1 text-sm text-slate-300">{profile._id || "Available after sign in"}</p>
           </div>
-
-          {/* Right */}
-          <div className="space-y-4">
-            <div>
-              <p className="text-gray-500 text-sm">Joined Date</p>
-              <p className="text-gray-800 font-medium">
-                {profile.joined}
-              </p>
-            </div>
-
-            {/* <div>
-              <p className="text-gray-500 text-sm">Orders</p>
-              <p className="text-gray-800 font-medium">
-                {profile.orders} Orders
-              </p>
-            </div> */}
-
-            {/* <div>
-              <p className="text-gray-500 text-sm">Total Spent</p>
-              <p className="text-gray-800 font-medium">
-                {profile.spent}
-              </p>
-            </div> */}
-          </div>
-
         </div>
-
-        {/* Buttons */}
-        <div className="flex justify-end gap-4 mt-8">
-          <button
-            className="px-4 py-2 bg-red-500 text-white hover:bg-red-600 rounded-lg"
-            onClick={() => {
-              localStorage.removeItem("token");
-              window.location.reload();
-            }}
-          >
-            Logout
-          </button>
-          <button className="px-4 py-2 bg-blue-500 text-white hover:bg-blue-600 rounded-lg">
-            Edit Profile
-          </button>
-        </div>
-
       </div>
-    </div>
+    </PageShell>
   );
-};
+}
 
 export default profile;
