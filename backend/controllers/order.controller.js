@@ -1,22 +1,33 @@
 
 import Order from "../models/order.models.js";
-import cart from "../models/cart.modal.js";
+import Cart from "../models/cart.modal.js";
 import Product from "../models/product.model.js";
+
 export const createOrder = async (req, res) => {
     try {
-        const { shippingaddress } = req.body; //
+        const { shippingaddress } = req.body;
 
-        const cartItems = await cart.findOne({ UserId: req.user.id });
+        const cartItems = await Cart.findOne({ UserId: req.user.id });
 
         if (!cartItems || cartItems.item.length === 0) {
             return res.status(400).json({ message: "Cart is empty", success: false });
         }
 
-        const orderItems = cartItems.item.map(item => ({
+        for (const item of cartItems.item) {
+            const product = await Product.findById(item.productId);
+            if (!product) {
+                return res.status(404).json({ message: "Product not found", success: false });
+            }
+            if (product.stock < item.quantity) {
+                return res.status(400).json({ message: `Insufficient stock for ${product.name}`, success: false });
+            }
+        }
+
+        const orderItems = cartItems.item.map((item) => ({
             productId: item.productId,
             quantity: item.quantity,
             price: item.price,
-            name:item.name
+            name: item.name,
         }));
 
         const totalprice = cartItems.item.reduce((sum, item) => sum + item.price * item.quantity, 0);
@@ -27,78 +38,69 @@ export const createOrder = async (req, res) => {
             totalAmount: totalprice,
             orderStatus: "processing",
             paymentStatus: "pending",
-            shippingaddress
+            shippingaddress,
         };
 
         const order = await Order.create(orderData);
 
-        // Reduce stock for each product
         for (const item of orderItems) {
             await Product.findByIdAndUpdate(item.productId, { $inc: { stock: -item.quantity } });
         }
 
-        cartItems.item = [];          
-        cartItems.totalAmount = 0;    
-        await cartItems.save(); 
-             
+        cartItems.item = [];
+        cartItems.totalprice = 0;
+        await cartItems.save();
 
         return res.status(200).json({ message: "Order created successfully", success: true, order });
-
     } catch (error) {
-        return res.status(500).json({ message: "Server error", success: false, error: error.message }); // readable error
+        return res.status(500).json({ message: "Server error", success: false, error: error.message });
     }
 };
+
 export const getOrder = async (req, res) => {
     try {
         const orderId = req.params.id;
         const order = await Order.findById(orderId);
+
         if (!order) {
             return res.status(404).json({ message: "Order not found", success: false });
         }
-        if (order.UserId.toString() !== req.user._id.toString()) {
+
+        if (order.UserId.toString() !== req.user.id.toString()) {
             return res.status(403).json({ message: "Unauthorized access", success: false });
         }
+
         return res.status(200).json({ message: "Order fetched successfully", success: true, order });
-
-
     } catch (error) {
         return res.status(500).json({
             message: "server error",
             success: false,
-            error: error
-
-
-        })
+            error: error.message,
+        });
     }
-    
-    
-}
+};
+
 export const getOrders = async (req, res) => {
     try {
         const orders = await Order.find({ UserId: req.user.id }).sort({ createdAt: -1 });
         if (!orders || orders.length === 0) {
-    return res.status(404).json({ message: "No orders found", success: false });
-}
+            return res.status(404).json({ message: "No orders found", success: false });
+        }
+
         return res.status(200).json({
             message: "Order fetched sucessfully",
             success: true,
-            orders
-        })
-
+            orders,
+        });
     } catch (error) {
         return res.status(500).json({
             message: "server error",
-            error: error,
-            success: false
-
-
-        })
-        
+            error: error.message,
+            success: false,
+        });
     }
-    
-    
-    
-}
+};
+
 export const updateOrderStatus = async (req, res) => {
     try {
         const { id } = req.params;
@@ -121,7 +123,7 @@ export const updateOrderStatus = async (req, res) => {
 
 export const getAllOrders = async (req, res) => {
     try {
-        const orders = await Order.find({}).populate('UserId', 'fullname email').sort({ createdAt: -1 });
+        const orders = await Order.find({}).populate("UserId", "fullname email").sort({ createdAt: -1 });
         return res.status(200).json({ message: "All orders fetched", success: true, orders });
     } catch (error) {
         return res.status(500).json({ message: "Server error", success: false, error: error.message });

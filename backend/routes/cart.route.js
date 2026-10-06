@@ -1,11 +1,13 @@
 import express from "express";
-import { getCart,addToCart,updateCart,removeFromCart,clearCart, totalprice } from "../controllers/Cart.controller.js";
-import { verifyToken}  from "../Middleware/verifyToken.middle.js";
-const router=express.Router();
-router.get("/",verifyToken,getCart);
-router.post ("/add",verifyToken,addToCart);
-router.put("/update",verifyToken,updateCart);
-router.delete("/clear",verifyToken,clearCart);
-router.delete("/remove",verifyToken,removeFromCart);
-router.post("/totalprice",verifyToken,totalprice);
+import { getCart, addToCart, updateCart, removeFromCart, clearCart, totalprice } from "../controllers/cart.controller.js";
+import { verifyToken } from "../Middleware/verifyToken.middle.js";
+
+const router = express.Router();
+router.get("/", verifyToken, getCart);
+router.post("/add", verifyToken, addToCart);
+router.put("/update", verifyToken, updateCart);
+router.delete("/clear", verifyToken, clearCart);
+router.delete("/remove", verifyToken, removeFromCart);
+router.post("/totalprice", verifyToken, totalprice);
+
 export default router;

@@ -2,124 +2,124 @@ import User from "../models/user.model.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
-const generateToken = (userId,role) => {
+const generateToken = (userId, role) => {
     const token = jwt.sign(
-        { id: userId,
-            role:role
-         },
-        process.env.JWT_SECRET_TOKEN,
+        { id: userId, role },
+        process.env.JWT_SECRET_TOKEN || "dev-secret-key",
         { expiresIn: "10d" }
-    )
+    );
 
     return token;
-}
+};
 
 export const signup = async (req, res) => {
     try {
-        
-        const { fullname, email, password,role } = req.body;
-        if (!fullname || !email || !password) {
+        const { fullname, email, password, role } = req.body;
+        const safeFullname = typeof fullname === "string" ? fullname.trim() : "";
+        const safeEmail = typeof email === "string" ? email.trim().toLowerCase() : "";
+
+        if (!safeFullname || !safeEmail || !password) {
             return res.status(400).json({
                 message: "All fields required",
                 success: false,
-            })
+            });
         }
 
-        if (fullname.length < 3) {
+        if (safeFullname.length < 3) {
             return res.status(400).json({
-                message: "Full name is must have more than 3 characters",
-                success: false
-            })
+                message: "Full name must have more than 3 characters",
+                success: false,
+            });
         }
+
         if (password.length < 6) {
             return res.status(400).json({
                 message: "Password must have more than 6 characters",
-                success: false
-            })
+                success: false,
+            });
         }
-        if (!/\S+@\S+\.\S+/.test(email)) {
+
+        if (!/\S+@\S+\.\S+/.test(safeEmail)) {
             return res.status(400).json({
                 message: "Enter valid email",
-                success: false
-            })
+                success: false,
+            });
         }
-        const existingUser = await User.findOne({ email });
-        
-        
+
+        const existingUser = await User.findOne({ email: safeEmail });
+
         if (existingUser) {
             return res.status(400).json({
                 message: "Email already registered",
-                success: false
-            })
+                success: false,
+            });
         }
 
         const newUser = await User.create({
-            fullname,
-            email,
+            fullname: safeFullname,
+            email: safeEmail,
             password,
-            role,
-        })
+            role: role || "user",
+        });
 
-        const token = generateToken(newUser._id,newUser.role);
+        const token = generateToken(newUser._id, newUser.role);
 
-        return res.status(200).json({
-            message: "User successfull registered",
+        return res.status(201).json({
+            message: "User successfully registered",
             success: true,
             user: {
                 id: newUser._id,
                 fullname: newUser.fullname,
                 email: newUser.email,
                 role: newUser.role,
-                imageUrl:newUser.imageUrl,
-                token
-            }
-        })
+                token,
+            },
+        });
     } catch (error) {
         return res.status(500).json({
             message: "Server error",
             success: false,
-            error: error
-        })
+            error: error.message,
+        });
     }
-}
+};
 
 export const login = async (req, res) => {
     try {
-        const { email, password,role } = req.body;
-        
-        
-        if (!email || !password) {
+        const { email, password, role } = req.body;
+        const safeEmail = typeof email === "string" ? email.trim().toLowerCase() : "";
+
+        if (!safeEmail || !password) {
             return res.status(400).json({
                 message: "All fields required",
-                success: false
-            })
+                success: false,
+            });
         }
 
-        if (!email.includes("@")) {
+        if (!safeEmail.includes("@")) {
             return res.status(400).json({
                 message: "Enter valid email",
-                success: false
-            })
+                success: false,
+            });
         }
 
-        const findUser = await User.findOne({email});
-        // console.log(findUser)
-        if(!findUser){
+        const findUser = await User.findOne({ email: safeEmail });
+        if (!findUser) {
             return res.status(404).json({
                 message: "User not found",
-                success: false
-            })
-        }
-        const isMatchedPassword = await bcrypt.compare(password,findUser.password);
-        // console.log('isMatchedPassword', isMatchedPassword)
-        if(!isMatchedPassword || findUser.role !==role){
-            return res.status(400).json({
-                message: "Wrong credentials",
-                success: false
-            })
+                success: false,
+            });
         }
 
-        const token = generateToken(findUser._id,findUser.role);
+        const isMatchedPassword = await bcrypt.compare(password, findUser.password);
+        if (!isMatchedPassword || (role && findUser.role !== role)) {
+            return res.status(400).json({
+                message: "Wrong credentials",
+                success: false,
+            });
+        }
+
+        const token = generateToken(findUser._id, findUser.role);
 
         return res.status(200).json({
             message: "Login successfully",
@@ -129,65 +129,82 @@ export const login = async (req, res) => {
                 fullname: findUser.fullname,
                 email: findUser.email,
                 role: findUser.role,
-                token
-            }
-        })
-
+                token,
+            },
+        });
     } catch (error) {
         return res.status(500).json({
             message: "Server error",
             success: false,
-            error: error
-        })
+            error: error.message,
+        });
     }
-}
-export const check=async(req,res)=>{
-    const user=req.user;
-    // console.log(user)
-    res.status(200).json({message:"verified",user});
-}
+};
+
+export const check = async (req, res) => {
+    const user = req.user;
+    res.status(200).json({ message: "verified", user });
+};
 
 export const logout = async (req, res) => {
     return res.status(200).json({
         message: "Logout successful",
-        success: true
-    })
-}
-export const adminfetch=async(req,res)=>{
-    try {
-        const response= await User.find();
-        res.status(200).json({message:"datafetched",data:response})
-    } catch (error) { 
-        res.status(400).json({message:"error occured",error:error})
-    }
-    
-}
-export const admindel=async(req,res)=>{
-    try {
-        const {email}=req.body
-        await User.delete({email})
-        res.status(200).json({message:"user deleted successfully"})
-    } catch (error) {
-        res.status(500).json({message:"error occured",error:error})
-    }
-}
+        success: true,
+    });
+};
 
-export const profile=async(req,res)=>{
-    const userId=req.user.id;
-    // console.log(userId)
+export const adminfetch = async (req, res) => {
     try {
-        const ans=await User.findById(userId)
-        // console.log(ans)
+        const response = await User.find().select("-password");
+        res.status(200).json({ message: "datafetched", data: response });
+    } catch (error) {
+        res.status(400).json({ message: "error occured", error: error.message });
+    }
+};
+
+export const admindel = async (req, res) => {
+    try {
+        const { email } = req.body;
+        const safeEmail = typeof email === "string" ? email.trim().toLowerCase() : "";
+
+        if (!safeEmail) {
+            return res.status(400).json({ message: "Email is required", success: false });
+        }
+
+        const result = await User.deleteOne({ email: safeEmail });
+        if (result.deletedCount === 0) {
+            return res.status(404).json({ message: "User not found", success: false });
+        }
+
+        res.status(200).json({ message: "user deleted successfully", success: true });
+    } catch (error) {
+        res.status(500).json({ message: "error occured", error: error.message, success: false });
+    }
+};
+
+export const profile = async (req, res) => {
+    const userId = req.user.id;
+
+    try {
+        const ans = await User.findById(userId).select("-password");
+
+        if (!ans) {
+            return res.status(404).json({
+                message: "User not found",
+                success: false,
+            });
+        }
+
         return res.status(200).json({
-            message:"profile loaded",
-            success:true,
-            ans
-        })
+            message: "profile loaded",
+            success: true,
+            ans,
+        });
     } catch (error) {
         return res.status(500).json({
-            message:"error occured ",
-            success:false,
-            error:error
-        })
+            message: "error occured ",
+            success: false,
+            error: error.message,
+        });
     }
-}
+};
